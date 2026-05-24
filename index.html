@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HAZEL — Esports Project Manager Portfolio</title>
+<meta name="description" content="HAZEL — Esports Project Manager. Tournament production, brand collaboration, multilingual operations across EECA & CIS." />
+<meta property="og:title" content="HAZEL — Esports Project Manager" />
+<meta property="og:description" content="Open to work. Tournament production, brand collaboration, multilingual operations." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="hero_cat.PNG" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jersey+20&family=Poppins:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #fff5ef; --ink: #030303; --paper: #ffffff;
+  --brick: #c54536; --teal: #1a7279; --teal-deep: #0a2729;
+  --muted: #5d5852;
+  --shadow-hard: 6px 6px 0 0 var(--ink);
+  --shadow-hard-sm: 4px 4px 0 0 var(--ink);
+  --shadow-hard-lg: 10px 10px 0 0 var(--ink);
+  --font-display: "Jersey 20", "Impact", system-ui, sans-serif;
+  --font-body: "Poppins", "Noto Sans SC", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --dur: .18s;
+  --topbar-h: 60px; --bottombar-h: 64px;
+}
+@media (max-width: 767px){ :root { --topbar-h: 52px; --bottombar-h: 54px; } }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; height: 100%; overflow: hidden; }
+button { font-family: inherit; cursor: pointer; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+.pager { position: fixed; top: var(--topbar-h); bottom: var(--bottombar-h); left: 0; right: 0; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+.pager::-webkit-scrollbar { display: none; }
+.page { height: 100%; width: 100%; scroll-snap-align: start; scroll-snap-stop: always; position: relative; display: flex; flex-direction: column; padding: clamp(20px, 3vw, 40px) clamp(20px, 4vw, 56px); overflow: hidden; }
+
+.topbar { position: fixed; top: 0; left: 0; right: 0; height: var(--topbar-h); background: var(--bg); border-bottom: 2px solid var(--ink); display: grid; grid-template-columns: 1fr auto auto; align-items: center; padding: 0 20px; z-index: 100; gap: 10px; }
+.topbar .left { display: flex; align-items: center; }
+.topbar .center { display: flex; gap: 8px; align-items: center; justify-content: center; }
+.topbar .right { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+.topbar .logo { font-family: var(--font-display); font-size: 26px; letter-spacing: 0.5px; display: flex; align-items: center; gap: 9px; }
+.topbar .logo .dot { width: 12px; height: 12px; background: var(--brick); border: 2px solid var(--ink); }
+.nav-btn { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); height: 36px; padding: 0 14px; box-shadow: 3px 3px 0 0 var(--ink); white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; line-height: 1; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.nav-btn > span { display: inline; line-height: 1; transform: translateY(-1px); }
+.nav-btn .nav-full  { display: inline; }
+.nav-btn .nav-short { display: none; }
+.nav-btn:hover { background: var(--brick); color: var(--bg); transform: translate(-2px,-2px); box-shadow: 5px 5px 0 0 var(--ink); }
+.nav-btn:active { transform: translate(2px,2px); box-shadow: 0 0 0 0 var(--ink); }
+@media (max-width: 1180px){
+  .nav-btn .nav-full  { display: none; }
+  .nav-btn .nav-short { display: inline; }
+  .nav-btn { padding: 0 11px; font-size: 10.5px; letter-spacing: 0.06em; }
+}
+.lang-btn { background: var(--bg); color: var(--ink); border: 2px solid var(--ink); width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 3px 3px 0 0 var(--ink); font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0; line-height: 1; padding: 0; }
+.lang-btn:hover { background: var(--teal); color: var(--bg); transform: translate(-2px,-2px); box-shadow: 5px 5px 0 0 var(--ink); }
+.lang-btn:active { transform: translate(2px,2px); box-shadow: 0 0 0 0 var(--ink); }
+.lang-btn #lang-label { display: inline-flex; align-items: center; justify-content: center; line-height: 1; transform: translateY(-0.5px); }
+.nav-btn.is-active { background: var(--brick); color: var(--bg); }
+@media (max-width: 767px){
+  .topbar { padding: 0 10px; gap: 6px; }
+  .topbar .logo { font-size: 20px; }
+  .topbar .logo span:last-child { display: none; }
+  .topbar .center { gap: 5px; }
+  .nav-btn { padding: 0 8px; font-size: 9.5px; letter-spacing: 0.04em; height: 36px; }
+  .lang-btn { width: 36px; height: 36px; font-size: 13px; }
+}
+
+.bottombar { position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottombar-h); background: var(--bg); border-top: 2px solid var(--ink); z-index: 100; display: flex; flex-direction: column; }
+.bottombar .trust-label { height: 18px; border-bottom: 1px solid var(--ink); display: flex; align-items: center; padding: 0 22px; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; background: var(--teal-deep); color: var(--bg); }
+.bottombar .trust-strip { flex: 1; overflow: hidden; position: relative; }
+.trust-track { display: flex; align-items: center; gap: 28px; height: 100%; padding: 0 22px; white-space: nowrap; animation: trustScroll 36s linear infinite; width: max-content; }
+.trust-track:hover { animation-play-state: paused; }
+/* Real-logo cell — height-driven, width auto so different aspect-ratios stay un-stretched */
+.logo-cell { position: relative; height: 32px; display: inline-flex; align-items: center; justify-content: center; padding: 3px 12px; background: var(--paper); border: 2px solid var(--ink); box-shadow: 3px 3px 0 0 var(--ink); flex: 0 0 auto; }
+.logo-cell img { height: 100%; width: auto; max-width: 110px; object-fit: contain; display: block; }
+/* Three brands sit on a near-black background — logo art unchanged.
+   Use a white hard-shadow so the cell still pops against the cream canvas. */
+.logo-cell[data-logo-id="sportfive"],
+.logo-cell[data-logo-id="uestc"],
+.logo-cell[data-logo-id="tjsports"] {
+  background: var(--ink);
+  box-shadow: 3px 3px 0 0 var(--paper), 3px 3px 0 2px var(--ink);
+}
+.logo-cell.is-slot { background: var(--brick); padding: 3px 14px; }
+.logo-cell.is-slot span { font-family: var(--font-display); font-size: 18px; line-height: 1; letter-spacing: 1px; color: var(--bg); transform: translateY(-1px); }
+html[lang="zh"] .logo-cell.is-slot span { font-family: "Noto Sans SC", system-ui, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.04em; transform: none; }
+/* Neon-blink for the &YOU slot */
+@keyframes youGlow {
+  0%, 100% { border-color: var(--ink); box-shadow: 3px 3px 0 0 var(--ink); }
+  50%      { border-color: #ffd166; box-shadow: 0 0 0 2px #ffd166, 0 0 14px 4px rgba(255,209,102,0.7), 3px 3px 0 0 var(--ink); }
+}
+.logo-cell.is-slot { animation: youGlow 0.6s steps(2, end) infinite; }
+@media (prefers-reduced-motion: reduce){
+  .logo-cell.is-slot { animation: none; }
+}
+/* Tooltip — global fixed node so it can escape the trust-strip's `overflow: hidden`.
+   Positioned by JS on hover. Pointer-events stay off so it never blocks marquee. */
+#logo-tip-floater { position: fixed; z-index: 200; background: var(--ink); color: var(--bg); border: 2px solid var(--ink); box-shadow: 3px 3px 0 0 var(--ink); padding: 7px 11px; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.45; letter-spacing: 0.04em; white-space: normal; max-width: 240px; min-width: 120px; text-align: center; opacity: 0; pointer-events: none; transition: opacity .15s var(--ease), transform .18s var(--ease); transform: translateY(4px); }
+#logo-tip-floater.show { opacity: 1; transform: translateY(0); }
+#logo-tip-floater::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--ink); }
+@media (max-width: 767px){
+  #logo-tip-floater { font-size: 10px; max-width: 170px; padding: 6px 9px; }
+}
+@keyframes trustScroll { from { transform: translateX(0);} to { transform: translateX(-50%);} }
+@media (max-width: 767px){
+  .bottombar .trust-label { height: 16px; font-size: 9px; padding: 0 12px; }
+  .trust-track { gap: 18px; padding: 0 12px; }
+  .logo-cell { height: 28px; padding: 2px 9px; }
+  .logo-cell img { max-width: 90px; }
+  .logo-cell.is-slot { padding: 2px 11px; }
+  .logo-cell.is-slot span { font-size: 14px; }
+  html[lang="zh"] .logo-cell.is-slot span { font-size: 11px; }
+}
+
+.hero { align-items: center; justify-content: flex-start; text-align: center; padding: 0; overflow-y: auto; scrollbar-width: none; }
+.hero::-webkit-scrollbar { display: none; }
+.hero-inner { position: relative; width: 100%; min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(16px, 3vh, 36px) clamp(16px, 3vw, 36px) clamp(80px, 14vh, 180px); }
+.hero-stage { position: relative; z-index: 3; width: min(60vh, 84vw, 600px); aspect-ratio: 1 / 1; display: grid; place-items: center; flex: 0 0 auto; --mx: 0; --my: 0; transform: translate3d(calc(var(--mx) * 6px), calc(var(--my) * 6px), 0); transition: transform 0.08s linear; }
+.hero-img { width: 100%; height: 100%; object-fit: contain; position: relative; z-index: 3; filter: none; user-select: none; pointer-events: none; background: var(--bg); animation: heroFloat 4.2s ease-in-out infinite; will-change: transform; }
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-10px) rotate(0.6deg); }
+}
+.hero-overlay { position: absolute; left: 50%; bottom: -10%; transform: translateX(-50%); z-index: 5; pointer-events: none; width: 100%; text-align: center; }
+.hero-subname { font-family: var(--font-mono); font-weight: 700; font-size: clamp(11px, 1.4vh, 14px); letter-spacing: 0.18em; text-transform: uppercase; color: var(--brick); margin-bottom: 6px; }
+html[lang="zh"] .hero-subname { font-family: "Noto Sans SC", system-ui, sans-serif; letter-spacing: 0.08em; }
+.hero-name { font-family: var(--font-display); font-size: clamp(64px, 14vh, 180px); line-height: 0.88; letter-spacing: 2px; color: var(--ink); text-shadow: 6px 6px 0 var(--brick); }
+.hero-slogan { margin-top: 6px; font-family: var(--font-mono); font-weight: 600; font-size: clamp(10px, 1.3vh, 13px); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+.hero-slogan span { display: block; }
+.hero-slogan span:nth-child(2) { color: var(--brick); margin-top: 3px; }
+@media (max-width: 767px){
+  .hero-stage { width: min(54vh, 84vw); }
+  .hero-name { font-size: clamp(48px, 11vh, 96px); text-shadow: 4px 4px 0 var(--brick); }
+  .hero-subname { font-size: 10.5px; letter-spacing: 0.12em; }
+  .hero-slogan { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-img { animation: none; }
+  .hero-stage { transform: none; }
+}
+
+.skills { justify-content: flex-start; }
+.skills-head { display: flex; align-items: center; gap: 12px; margin-bottom: clamp(8px, 1.2vh, 16px); flex: 0 0 auto; }
+.skills-head .badge { width: 38px; height: 38px; background: var(--brick); border: 2px solid var(--ink); box-shadow: var(--shadow-hard-sm); display: grid; place-items: center; color: var(--bg); font-family: var(--font-display); font-size: 22px; }
+.skills-head h2 { font-family: var(--font-display); font-size: min(clamp(22px, 5.5vh, 60px), 7.5vw); letter-spacing: 1px; line-height: 0.9; white-space: nowrap; }
+.skill-list { flex: 1 1 auto; min-height: 0; display: grid; grid-auto-rows: minmax(0, 1fr); gap: clamp(6px, 1vh, 12px); width: 100%; max-width: 1280px; margin: 0 auto; }
+.skill-card { position: relative; display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.6vw, 18px); background: var(--paper); border: 2px solid var(--ink); box-shadow: var(--shadow-hard); padding: clamp(8px, 1vh, 14px) clamp(10px, 1.4vw, 16px); align-items: center; min-height: 0; overflow: hidden; cursor: pointer; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+.skill-card:hover { transform: translate(-3px,-3px); box-shadow: 9px 9px 0 0 var(--ink); }
+.skill-card.read { opacity: 0.55; background: #f3ece6; }
+.skill-card.read:hover { opacity: 1; }
+.skill-card.read::before { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 6px; background: var(--brick); }
+.skill-illu { width: clamp(48px, 7.5vh, 96px); height: clamp(48px, 7.5vh, 96px); flex: 0 0 auto; margin: 0 auto; border: 2px solid var(--ink); background: var(--teal); display: grid; place-items: center; color: var(--bg); font-family: var(--font-display); font-size: clamp(18px, 3vh, 36px); position: relative; overflow: hidden; }
+.skill-card:nth-child(2n) .skill-illu { background: var(--brick); }
+.skill-card:nth-child(3n) .skill-illu { background: var(--teal-deep); }
+.skill-illu::before { content:""; position: absolute; inset: 0; background-image: linear-gradient(45deg, rgba(255,255,255,.08) 25%, transparent 25%), linear-gradient(-45deg, rgba(255,255,255,.08) 25%, transparent 25%); background-size: 14px 14px; }
+.skill-illu span { position: relative; z-index: 1; line-height: 1; }
+.skill-body { display: flex; flex-direction: column; justify-content: center; min-width: 0; min-height: 0; }
+.skill-title { font-family: var(--font-display); font-size: clamp(16px, 2.4vh, 28px); line-height: 1.05; letter-spacing: 0.5px; margin-bottom: clamp(2px, 0.5vh, 6px); }
+.skill-desc { font-size: clamp(11px, 1.3vh, 14px); line-height: 1.4; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+@media (min-height: 720px){
+  .skill-desc { -webkit-line-clamp: 3; }
+}
+@media (max-height: 600px){
+  .skills-head { margin-bottom: 6px; }
+  .skills-head h2 { font-size: clamp(26px, 5vh, 42px); }
+  .skills-head .badge { width: 30px; height: 30px; font-size: 18px; }
+  .skill-illu { width: 44px; height: 44px; font-size: 16px; }
+  .skill-title { font-size: 14px; margin-bottom: 2px; }
+  .skill-desc { font-size: 10.5px; line-height: 1.35; -webkit-line-clamp: 2; }
+  .skill-card { padding: 6px 10px; gap: 10px; }
+  .skill-list { gap: 5px; }
+}
+@media (max-width: 767px){
+  .skill-list { gap: 8px; }
+  .skill-card { grid-template-columns: auto 1fr; padding: 8px; gap: 10px; }
+  .skill-illu { width: 56px; height: 56px; font-size: 20px; }
+  .skill-title { font-size: 15px; }
+  .skill-desc { font-size: 11px; line-height: 1.35; -webkit-line-clamp: 2; }
+}
+
+.projects { justify-content: flex-start; }
+.projects-head { display: flex; align-items: end; justify-content: flex-start; gap: 14px; margin-bottom: clamp(8px, 1.5vh, 18px); flex: 0 0 auto; }
+.projects-head .badge { width: 38px; height: 38px; background: var(--teal); border: 2px solid var(--ink); box-shadow: var(--shadow-hard-sm); display: grid; place-items: center; color: var(--bg); font-family: var(--font-display); font-size: 22px; }
+.projects-head h2 { font-family: var(--font-display); font-size: min(clamp(22px, 5.5vh, 60px), 7.5vw); letter-spacing: 1px; line-height: 0.9; white-space: nowrap; }
+.projects-frame { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
+.projects-rail { display: flex; gap: clamp(28px, 4vw, 56px); overflow-x: auto; overflow-y: visible; scroll-behavior: smooth; scrollbar-width: none; padding: clamp(36px, 6vh, 70px) clamp(24px, 4vw, 48px); align-items: center; scroll-snap-type: x mandatory; justify-content: flex-start; cursor: grab; }
+.projects-rail.fits { justify-content: center; scroll-snap-type: none; cursor: default; }
+.projects-rail::-webkit-scrollbar { display: none; }
+
+/* Tilted rectangular card — bottom edge stays parallel to floor via outer
+   wrapper, while inner image+content layer is rotated -6deg for the slant.
+   The outer is the snap target so layout/scroll math works normally. */
+.diamond {
+  flex: 0 0 auto;
+  position: relative;
+  width: clamp(260px, 34vw, 380px);
+  height: clamp(180px, 28vh, 240px);
+  scroll-snap-align: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+.diamond .tilt {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-hard-lg);
+  transform: rotate(-6deg);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.diamond:nth-child(2n) .tilt { transform: rotate(5deg); }
+.diamond:nth-child(3n) .tilt { transform: rotate(-3deg); }
+.diamond:hover .tilt { transform: rotate(0deg) translateY(-4px); box-shadow: 14px 14px 0 0 var(--ink); }
+.diamond.read { opacity: 0.55; }
+.diamond.read:hover { opacity: 1; }
+.diamond.read::after {
+  content: "";
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 28px; height: 28px;
+  background: var(--brick);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  z-index: 5;
+  pointer-events: none;
+}
+/* Subtle "screen" texture inside — feels like the reference */
+.diamond .tilt::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18) 0, transparent 55%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 6px, transparent 6px 12px);
+  pointer-events: none;
+}
+/* First (paper-bg) card — same texture but darker alpha so stripes are visible on cream. */
+.diamond:nth-child(1) .tilt::before {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0,0,0,0.06) 0, transparent 55%),
+    repeating-linear-gradient(135deg, rgba(3,3,3,0.07) 0 6px, transparent 6px 12px);
+}
+.diamond .diamond-inner {
+  position: relative;
+  z-index: 2;
+  width: 84%;
+  height: 78%;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  text-align: left;
+  padding: 4px;
+  pointer-events: none;
+}
+.diamond h3 { font-family: var(--font-display); font-size: clamp(20px, 2.8vh, 30px); line-height: 1.05; letter-spacing: 0.5px; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.diamond p { font-size: clamp(11px, 1.4vh, 13px); line-height: 1.4; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.diamond:nth-child(2n) .tilt { background: var(--teal); color: var(--bg); }
+.diamond:nth-child(2n) p { color: rgba(255,255,255,.85); }
+.diamond:nth-child(3n) .tilt { background: var(--brick); color: var(--bg); }
+.diamond:nth-child(3n) p { color: rgba(255,255,255,.9); }
+.diamond:nth-child(4n) .tilt { background: var(--teal-deep); color: var(--bg); }
+.diamond:nth-child(4n) p { color: rgba(255,255,255,.85); }
+/* tournament-tile little tag in upper left */
+.diamond .tile-tag {
+  position: absolute;
+  top: 12px; left: 12px;
+  z-index: 3;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--bg);
+  border: 2px solid var(--ink);
+  padding: 3px 7px;
+  pointer-events: none;
+}
+.diamond:nth-child(2n) .tile-tag,
+.diamond:nth-child(3n) .tile-tag,
+.diamond:nth-child(4n) .tile-tag { color: var(--ink); background: var(--bg); }
+.proj-arrows { display: flex; gap: 14px; margin-top: 4px; justify-content: center; flex: 0 0 auto; }
+.proj-arrows.hidden { display: none; }
+.proj-arrows button { width: clamp(40px, 5vh, 50px); height: clamp(40px, 5vh, 50px); background: var(--bg); border: 2px solid var(--ink); box-shadow: var(--shadow-hard-sm); display: grid; place-items: center; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.proj-arrows button:hover { background: var(--ink); color: var(--bg); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 0 var(--ink); }
+.proj-arrows button:active { transform: translate(2px,2px); box-shadow: 0 0 0 0 var(--ink); }
+.proj-arrows svg { width: 20px; height: 20px; }
+
+.contact { display: grid; grid-template-rows: auto auto auto auto auto; gap: clamp(12px, 1.8vh, 22px); align-content: start; padding-bottom: clamp(28px, 5vh, 56px); overflow-y: auto; scrollbar-width: none; }
+.contact::-webkit-scrollbar { display: none; }
+.contact-title { font-family: var(--font-display); font-size: clamp(48px, 11vh, 152px); letter-spacing: 2px; line-height: 0.9; text-shadow: 6px 6px 0 var(--brick); }
+.days-box { align-self: flex-start; background: var(--ink); color: var(--bg); border: 2px solid var(--ink); box-shadow: var(--shadow-hard); padding: clamp(10px, 1.6vh, 18px) clamp(18px, 3vw, 32px); width: fit-content; max-width: 100%; }
+.days-box .num { font-family: var(--font-display); font-size: clamp(60px, 12vh, 168px); line-height: 0.85; letter-spacing: 1px; color: var(--bg); }
+/* Days flip ticker: the last digit is wrapped in <span class="flip-digit"> with a stack
+   of two layers (.face is the current digit; .next is the upcoming digit). On a tick
+   we set --t and animate the wrapper to flip 90deg, swap layers, then flip back. */
+.flip-digit { position: relative; display: inline-block; transform-origin: 50% 50%; backface-visibility: hidden; will-change: transform; }
+.flip-digit.flip { animation: flipDigit 0.7s cubic-bezier(.5,.05,.5,.95); }
+@keyframes flipDigit {
+  0%   { transform: rotateX(0deg);  }
+  50%  { transform: rotateX(-90deg); }
+  50.01% { transform: rotateX(90deg); }
+  100% { transform: rotateX(0deg); }
+}
+@media (prefers-reduced-motion: reduce){
+  .flip-digit.flip { animation: none; }
+}
+.days-box .num .accent { color: var(--brick); }
+/* ZH "天" character is visually heavier than EN "days" — scale it down for balance. */
+html[lang="zh"] .days-box .num .accent { font-size: 0.45em; vertical-align: 0.3em; letter-spacing: 0; margin-left: 0.18em; }
+/* ZH mode: days num inherits the body Chinese font for visual consistency with caption / Chinese headings. */
+:root[lang="zh"] .days-box .num,
+html[lang="zh"] .days-box .num { font-family: "Noto Sans SC", "Poppins", system-ui, sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+.days-box .caption { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 4px; opacity: 0.85; }
+/* ZH caption is a prefix ("成为电竞人已经" + 数字); flip order so caption sits above the number. */
+html[lang="zh"] .days-box { display: flex; flex-direction: column-reverse; }
+html[lang="zh"] .days-box .caption { font-family: "Noto Sans SC", system-ui, sans-serif; letter-spacing: 0.04em; text-transform: none; margin-top: 0; margin-bottom: 6px; font-size: 13px; opacity: 0.95; }
+.contact-group { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; margin-top: clamp(8px, 1.6vh, 16px); }
+.contact-group .label { font-family: var(--font-display); font-size: clamp(28px, 4.5vh, 48px); letter-spacing: 1px; text-align: center; }
+.contact-buttons { display: flex; flex-direction: column; gap: 10px; align-items: stretch; width: min(360px, 90%); }
+.contact-btn { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); padding: 13px 18px; box-shadow: var(--shadow-hard-sm); display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.contact-btn:hover { background: var(--brick); color: var(--bg); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 0 var(--ink); }
+.contact-btn:active { transform: translate(2px,2px); box-shadow: 0 0 0 0 var(--ink); }
+.contact-btn svg { width: 16px; height: 16px; }
+
+/* ───────── Contact-foot: flat back-to-top + copyline ───────── */
+.contact-foot { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: clamp(12px, 2.4vh, 28px); width: 100%; }
+.back-top { width: min(360px, 90%); height: 30px; padding: 0 20px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; background: var(--ink); color: var(--bg); border: 2px solid var(--ink); box-shadow: 3px 3px 0 0 var(--ink); display: inline-flex; align-items: center; justify-content: center; line-height: 1; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease); }
+.back-top:hover { background: var(--brick); transform: translate(-2px,-2px); box-shadow: 5px 5px 0 0 var(--ink); }
+.back-top:active { transform: translate(2px,2px); box-shadow: 0 0 0 0 var(--ink); }
+.copyline { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--muted); text-align: center; line-height: 1.55; max-width: 720px; padding: 0 12px; }
+@media (max-width: 767px){
+  .copyline { font-size: 9px; }
+}
+
+/* ───────── Coffee Coupon Thank-you Modal ───────── */
+.coupon { position: relative; background: var(--bg); border: 2px solid var(--ink); box-shadow: var(--shadow-hard-lg); width: min(640px, 92vw); max-height: 92vh; padding: 26px clamp(20px, 4vw, 36px); animation: modalIn 0.25s var(--ease); overflow: visible; }
+.coupon::before, .coupon::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; background: rgba(3,3,3,0.55); border: 2px solid var(--ink); border-radius: 50%; }
+.coupon::before { left: -16px; }
+.coupon::after  { right: -16px; }
+.coupon-title { font-family: var(--font-display); font-size: clamp(36px, 7vh, 68px); letter-spacing: 2px; line-height: 1; text-align: center; color: var(--brick); text-shadow: 4px 4px 0 var(--ink); margin-bottom: 18px; }
+.coupon-body { display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(12px, 2vw, 22px); align-items: center; padding: 14px 4px; }
+.coupon-divider { width: 0; align-self: stretch; border-left: 3px dashed var(--ink); }
+.coupon-left { display: grid; place-items: center; }
+.coffee-cup { width: clamp(110px, 16vh, 160px); height: auto; display: block; }
+.coupon-right { text-align: left; }
+.coupon-foru { font-family: var(--font-display); font-size: clamp(28px, 5vh, 48px); letter-spacing: 1px; line-height: 1; color: var(--ink); margin-bottom: 12px; }
+.coupon-foru .heart { color: var(--brick); display: inline-block; transform-origin: center; animation: heartBeat 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce){ .coupon-foru .heart { animation: none; } }
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  20%      { transform: scale(1.08); }
+  40%      { transform: scale(1); }
+}
+.coupon-sub { font-family: var(--font-mono); font-size: 12px; line-height: 1.55; color: var(--ink); letter-spacing: 0.02em; }
+html[lang="zh"] .coupon-sub { font-family: "Noto Sans SC", system-ui, sans-serif; font-size: 13px; }
+.coupon-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
+.coupon-btn { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 12px 22px; border: 2px solid var(--ink); box-shadow: 4px 4px 0 0 var(--ink); cursor: pointer; line-height: 1; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.coupon-btn.primary { background: var(--brick); color: var(--bg); }
+.coupon-btn.ghost   { background: var(--bg); color: var(--ink); }
+.coupon-btn:hover   { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 0 var(--ink); }
+.coupon-btn:active  { transform: translate(2px,2px); box-shadow: 0 0 0 0 var(--ink); }
+@media (max-width: 599px){
+  .coupon { padding: 22px 16px; }
+  .coupon-body { grid-template-columns: 1fr; gap: 12px; }
+  .coupon-divider { width: 80%; height: 0; border-left: 0; border-top: 3px dashed var(--ink); justify-self: center; }
+  .coupon-right { text-align: center; }
+  .coupon-actions { gap: 10px; }
+  .coupon-btn { padding: 10px 16px; font-size: 10.5px; }
+}
+
+.modal-backdrop { position: fixed; inset: 0; background: rgba(3,3,3,0.55); z-index: 200; display: none; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(2px); }
+.modal-backdrop.open { display: flex; }
+.modal { background: var(--bg); border: 2px solid var(--ink); box-shadow: var(--shadow-hard-lg); max-width: min(720px, 92vw); max-height: 86vh; width: 100%; display: flex; flex-direction: column; overflow: hidden; animation: modalIn 0.25s var(--ease); }
+@keyframes modalIn { from { transform: translateY(20px) scale(0.96); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+.modal-head { background: var(--ink); color: var(--bg); padding: 16px 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.modal-head h3 { font-family: var(--font-display); font-size: clamp(22px, 3.4vh, 32px); line-height: 1; letter-spacing: 0.5px; }
+.modal-close { background: var(--brick); color: var(--bg); border: 2px solid var(--bg); width: 36px; height: 36px; display: grid; place-items: center; font-family: var(--font-display); font-size: 22px; flex: 0 0 auto; transition: transform var(--dur) var(--ease); }
+.modal-close:hover { transform: rotate(90deg); }
+.modal-body { padding: 20px 22px; overflow-y: auto; font-size: 14px; line-height: 1.65; color: var(--ink); white-space: pre-wrap; }
+.modal-body .section-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brick); margin: 14px 0 6px; border-bottom: 2px solid var(--ink); padding-bottom: 4px; }
+.modal-body .section-label:first-child { margin-top: 0; }
+.thank-modal { text-align: center; background: var(--brick); color: var(--bg); padding: 40px 32px; }
+.thank-modal h3 { font-family: var(--font-display); font-size: clamp(40px, 8vh, 80px); line-height: 0.9; letter-spacing: 1px; margin-bottom: 12px; color: var(--bg); text-shadow: 6px 6px 0 var(--ink); }
+.thank-modal p { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 22px; opacity: 0.95; }
+.thank-modal button { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; background: var(--bg); color: var(--ink); border: 2px solid var(--ink); padding: 12px 24px; box-shadow: 6px 6px 0 0 var(--ink); }
+.thank-modal button:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 0 var(--ink); }
+@media (max-width: 767px){
+  .modal-body { padding: 16px; font-size: 13px; }
+  .modal-head { padding: 12px 16px; }
+  .thank-modal h3 { text-shadow: 4px 4px 0 var(--ink); }
+}
+
+/* ───────── A11y / Focus / Skip-link / Visually-hidden ───────── */
+:focus-visible { outline: 3px solid var(--brick); outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; top: 0; z-index: 300; background: var(--ink); color: var(--bg); padding: 10px 16px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; border: 2px solid var(--brick); }
+.skip-link:focus { left: 12px; top: 12px; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* ───────── Reset progress floating button (removed in v6) ───────── */
+
+/* ───────── Visual polish (P3) ───────── */
+@media (max-width: 767px){
+  .diamond .tilt,
+  .diamond:nth-child(2n) .tilt,
+  .diamond:nth-child(3n) .tilt { transform: rotate(-2deg); }
+}
+@media (max-height: 600px){
+  .hero-overlay { bottom: clamp(-60px, -8vh, -20px); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .trust-track { animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#hero" data-i18n="skipLink">Skip to main content</a>
+<h1 class="visually-hidden">HAZEL — Esports Project Manager Portfolio</h1>
+
+<header class="topbar" role="banner">
+  <div class="left">
+    <a href="#hero" class="logo" data-target="hero" aria-label="Hazel — back to top">
+      <span class="dot" aria-hidden="true"></span>
+      <span>HAZEL.</span>
+    </a>
+  </div>
+  <div class="center">
+    <button class="nav-btn" data-target="skills" type="button"><span class="nav-full" data-i18n="navSkills">Skills View</span><span class="nav-short" data-i18n="navSkillsShort">Skills</span></button>
+    <button class="nav-btn" data-target="projects" type="button"><span class="nav-full" data-i18n="navProjects">Projects View</span><span class="nav-short" data-i18n="navProjectsShort">Projects</span></button>
+    <button class="nav-btn" data-target="contact" type="button" data-i18n="navContact">Contact me</button>
+  </div>
+  <div class="right">
+    <button class="lang-btn" id="lang-btn" type="button" aria-label="Toggle language" title="Language">
+      <span id="lang-label">中</span>
+    </button>
+  </div>
+</header>
+
+<main class="pager" id="pager">
+
+  <section class="page hero" id="hero" data-page="0">
+    <div class="hero-inner">
+      <div class="hero-stage">
+        <img class="hero-img" src="hero_cat.PNG" alt="" loading="eager" decoding="async" fetchpriority="high" />
+        <div class="hero-overlay">
+          <p class="hero-subname" data-i18n="heroSubname">ZHAO ZIHANG · HAZEL</p>
+          <p class="hero-name" aria-hidden="true">HAZEL</p>
+          <p class="hero-slogan">
+            <span data-i18n="slogan1">Esports Project Manager</span>
+            <span data-i18n="slogan2">Aiming to know something about everything in esports</span>
+          </p>
+        </div>
+      </div>
+      <p class="visually-hidden" data-i18n="heroAria">Esports Project Manager · EECA & CIS Operations. Curating moments, building communities.</p>
+    </div>
+  </section>
+
+  <section class="page skills" id="skills" data-page="1">
+    <div class="skills-head">
+      <span class="badge">★</span>
+      <h2 data-i18n="skillsTitle">My Skills</h2>
+    </div>
+    <div class="skill-list" id="skill-list"></div>
+  </section>
+
+  <section class="page projects" id="projects" data-page="2">
+    <div class="projects-head">
+      <span class="badge">◆</span>
+      <h2 data-i18n="projectsTitle">Past Projects</h2>
+    </div>
+    <div class="projects-frame">
+      <div class="projects-rail" id="projects-rail" tabindex="0" aria-label="Past projects"></div>
+      <div class="proj-arrows" id="proj-arrows" aria-label="Projects navigation">
+        <button id="proj-prev" type="button" aria-label="Previous project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><polyline points="15 6 9 12 15 18"/></svg>
+        </button>
+        <button id="proj-next" type="button" aria-label="Next project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><polyline points="9 6 15 12 9 18"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="page contact" id="contact" data-page="3">
+    <h2 class="contact-title" data-i18n="openTitle">I AM<br/>OPEN TO WORK<span style="color:var(--brick);">.</span></h2>
+    <div class="days-box">
+      <div class="num"><span id="days-count">--</span><span class="accent" data-i18n="daysWord"> days</span></div>
+      <div class="caption" data-i18n="daysCaption">dedicated to esports</div>
+    </div>
+    <div class="contact-group">
+      <span class="label" data-i18n="contactLabel">Contact me ↘</span>
+      <div class="contact-buttons">
+        <a class="contact-btn" href="mailto:hazel@example.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="5" width="18" height="14"/><polyline points="3 7 12 13 21 7"/></svg>
+          <span data-i18n="emailBtn">Email</span>
+        </a>
+        <a class="contact-btn" href="#wechat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><circle cx="12" cy="12" r="9"/><path d="M8 11 h.01 M12 11 h.01 M16 11 h.01"/></svg>
+          <span data-i18n="wechatBtn">WeChat</span>
+        </a>
+        <a class="contact-btn" href="#linkedin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="3" width="18" height="18"/><line x1="8" y1="10" x2="8" y2="17"/><path d="M12 17v-4a3 3 0 0 1 6 0v4"/></svg>
+          <span data-i18n="linkedinBtn">LinkedIn</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-foot">
+      <button class="back-top" type="button" data-target="hero">
+        <span data-i18n="backTop">Back to top &uarr;</span>
+      </button>
+      <p class="copyline">2026 Zihang &ldquo;HAZEL&rdquo; Zhao &middot; All Rights Reserved &middot; This site does not collect any personal data &middot; Created with Claude-Opus-4.7.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bottombar" role="contentinfo">
+  <div class="trust-label" data-i18n="trustedBy">Trusted by</div>
+  <div class="trust-strip">
+    <div class="trust-track" id="trust-track"></div>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="detail-modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <h3 id="modal-title">Title</h3>
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="thank-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="coupon-title" aria-hidden="true">
+  <div class="coupon" role="document">
+    <h3 class="coupon-title" id="coupon-title" data-i18n="couponTitle">COFFEE COUPON</h3>
+    <div class="coupon-body">
+      <div class="coupon-left">
+        <svg class="coffee-cup" viewBox="0 0 130 150" aria-hidden="true">
+          <!-- steam -->
+          <path d="M40 22 Q34 34 42 46 Q50 58 44 70" stroke="#030303" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M62 18 Q56 30 64 42 Q72 54 66 66" stroke="#030303" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M84 22 Q78 34 86 46 Q94 58 88 70" stroke="#030303" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- mug body -->
+          <rect x="22" y="78" width="72" height="50" rx="3" fill="#c54536" stroke="#030303" stroke-width="3"/>
+          <!-- coffee surface -->
+          <ellipse cx="58" cy="80" rx="34" ry="4" fill="#3a1410" stroke="#030303" stroke-width="2"/>
+          <!-- handle -->
+          <path d="M94 88 q22 0 22 18 q0 18 -22 18" fill="none" stroke="#030303" stroke-width="3" stroke-linejoin="round"/>
+          <!-- highlight -->
+          <rect x="28" y="84" width="6" height="34" rx="2" fill="#fff5ef" opacity="0.45"/>
+          <!-- saucer -->
+          <ellipse cx="58" cy="135" rx="50" ry="6" fill="#030303"/>
+        </svg>
+      </div>
+      <div class="coupon-divider" aria-hidden="true"></div>
+      <div class="coupon-right">
+        <p class="coupon-foru">FOR U <span class="heart" aria-hidden="true">&#10084;&#65039;</span></p>
+        <p class="coupon-sub" data-i18n="thankSub">You read all my cards! I&rsquo;d love to thank you with a cup of coffee &mdash; when I become your colleague :D</p>
+      </div>
+    </div>
+    <div class="coupon-actions">
+      <button class="coupon-btn primary" id="thank-close-sure" type="button" data-i18n="thankSure">SURE</button>
+      <button class="coupon-btn ghost" id="thank-close-bubble" type="button" data-i18n="thankBubble">LET&rsquo;S BUBBLE TEA</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SKILLS = [
+  { titleZH:'赛事项目全流程统筹与管理', titleEN:'End-to-End Tournament Project Management',
+    descZH:'具备海外跨国界、多量级项目的规划与执行能力，能全盘掌控预算、赛制、视觉、直播、选手及赞助商权益。',
+    descEN:'Planning and execution of overseas, regional, multi-tier tournaments. Full ownership of budget, format, visuals, broadcast, players and sponsor rights.',
+    exampleZH:'统筹EECA区域13国PUBGM线上/线下赛事（如PMCO, PMNC, PMGO），全面规划赛程赛制，实现零事故，报名人数达成率169%。',
+    exampleEN:'Led PUBGM tournaments across 13 EECA countries (PMCO, PMNC, PMGO). Set goals, allocated budget, designed format. Delivered with zero incidents and reached 169% of registration target.' },
+  { titleZH:'跨部门协同与多边供应商管理', titleEN:'Cross-Functional & Multi-Agency Coordination',
+    descZH:'具备在高压环境下管理多方外部合作伙伴的能力，擅长谈判、项目进度监督和解决突发风险。',
+    descEN:'Manage multiple external partners under pressure. Skilled in negotiation, progress oversight, and resolving on-the-ground risks.',
+    exampleZH:'区域赛事中最多同时对接9个供应商及合作伙伴；跨部门协调解决游戏技术支持、制裁判罚等问题。与银行、手机等多赞助商品牌合作，保障赞助商权益执行。',
+    exampleEN:'Managed up to 9 suppliers and partners simultaneously while coordinating cross-functional teams to resolve technical support and ruling issues in a timely manner. Worked with banking and mobile device sponsors to negotiate and deliver sponsorship benefits.' },
+  { titleZH:'社媒矩阵运营及数据分析', titleEN:'Social Media Operations & Data Analytics',
+    descZH:'熟悉海外主流社媒玩法机制（IG, TikTok, YouTube, Telegram），以数据为导向调整内容与广告投流策略，实现粉丝与曝光的持续增长。',
+    descEN:'Fluent in overseas social platforms (IG, TikTok, YouTube, Telegram). Tune content and ad strategy by data, driving steady audience and reach growth.',
+    exampleZH:'运营CIS电竞社媒矩阵：2025年粉丝净增长115K，观看量251.48M（同比+194.8%）；2026年社媒投流CTR同比提升50%。',
+    exampleEN:'Ran the PUBGM CIS esports social channels. In 2025: +115K followers, 251.48M views (+194.8% YoY). In 2026: +50% YoY CTR through continuous ad optimization.' },
+  { titleZH:'本地化整合营销与公关策划', titleEN:'Localized Integrated Marketing & PR',
+    descZH:'具备市场洞察力，擅长捕捉具社会价值的事件并通过线上文化与线下场景联动，借势政府与媒体资源，实现破圈影响力。',
+    descEN:'Market insight to spot socially-charged moments and amplify them with online culture and on-ground events, leveraging government and media to break out of the niche.',
+    exampleZH:'2025 PMGC乌兹推广中，将"首支全乌兹阵容晋级"升级为国家荣誉叙事。协调乌兹国家奥委会与国家信息化部官员出席出征仪式，获9家本地主流新闻频道和电视台报道。',
+    exampleEN:'For 2025 PMGC Uzbekistan: framed first all-Uzbek roster qualifying for PMGC as a national-pride story. Brought officials from the Uzbek Olympic Committee and Ministry of IT to the send-off ceremony. Secured deep coverage from 9 mainstream local news channels and broadcast TV.' },
+  { titleZH:'跨界内容共创与KOL生态建设', titleEN:'Cross-Industry Content & Creator Collaboration',
+    descZH:'具备跨界资源整合能力，与艺术家、音乐人合作突破原有电竞圈层；与KOL建立双赢共创机制，激活非本地化市场流量。',
+    descEN:'Integrate cross-industry resources. Partner with artists and musicians to break out of the esports niche. Build win-win co-creation with content creators to activate audiences in non-localized markets.',
+    exampleZH:'1) 跨界联动：与本地画家创作应援视频（280万播放），说唱歌手改编主题曲（Yandex Music乌兹热榜Top3）；\n2) 生态共创：扶持建联创作者，官方频道非本地化内容观看量由数百提升至10k+，海外创作者频道赛事期间EECA观众占比达41%。',
+    exampleEN:'1) Cross-industry: tribute video with a renowned local painter (2.8M views) and theme-song remix with rapper MillyMallymoe (Top 3 on Yandex Music Uzbekistan).\n2) Ecosystem: support and exchange benefits with creators. Official-channel non-localized views climbed from a few hundred to a steady 10k+; overseas creator channels reached 41% EECA audience share during events.' },
+  { titleZH:'国际顶级赛事现场内容制作', titleEN:'On-site Content Production at International Tournaments',
+    descZH:'具备丰富的国际赛事现场内容制作经验，能够紧贴赛事节点、热点与趋势策划内容。',
+    descEN:'Hands-on experience producing on-site content at international tournaments. Plan around match milestones, breaking moments and trends.',
+    exampleZH:'负责2025 PMSL CSA Spring & Fall、2025 PMWC、2025 PMGC、2026 PMGO S1 EECA等现场官方CIS社媒内容策划与制作。',
+    exampleEN:'Owned official CIS social content for 2025 PMSL CSA Spring & Fall, 2025 PMWC, 2025 PMGC, 2026 PMGO S1 EECA. Planned column series around match milestones and ran topic campaigns with partners.' }
+];
+
+const PROJECTS = [
+  { titleZH:'PUBGM东欧中亚区域赛事统筹', titleEN:'PUBGM EECA Regional Tournaments — End-to-End Lead',
+    shortZH:'负责EECA区域多个中小型赛事的规划与执行。',
+    shortEN:'Owned planning and execution of multiple tournaments across the EECA region.',
+    longZH:'统筹EECA区域13个国家的大众赛事（线上）及区域赛事（线下）。\n赛事全流程管理：推广、视觉、直播、社媒、选手、赞助商权益执行。最多同时对接9个供应商。零事故交付，报名人数目标达成率169%。\n\n国家级业余赛事：2025 PMCO EASTERN EUROPE Spring & Fall、2025 PMCO CENTRAL ASIA Fall、2025 PMNC UZBEKISTAN Fall、2026 PMNC Spring、2026 PMCO Spring EEU/CA。\n区域职业赛事：2026 PMGO S1 EECA FINALS。',
+    longEN:'Led both online amateur tournaments across 13 EECA countries and offline regional events. Set goals and budget per event, designed schedules, formats and qualification systems.\nFull-stack tournament management: marketing, visual design, broadcast production, social media, player management, sponsor comms and rights execution.\nManaged up to 9 vendors and partners in parallel; coordinated cross-functional teams. Delivered zero-incident production. Hit 169% of the registration target.\n\nNational-level amateur events: 2025 PMCO EASTERN EUROPE Spring & Fall, 2025 PMCO CENTRAL ASIA Fall, 2025 PMNC UZBEKISTAN Fall, 2026 PMNC Spring, 2026 PMCO Spring EEU/CA.\nRegional pro events: 2026 PMGO S1 EECA FINALS.' },
+  { titleZH:'PUBGM CIS电竞社媒矩阵运营', titleEN:'PUBGM CIS Esports Social Channels Operations',
+    shortZH:'负责PUBGM CIS电竞官方Instagram、TikTok、YouTube、Telegram账号的运营。',
+    shortEN:'Operated PUBGM CIS official channels on Instagram, TikTok, YouTube and Telegram.',
+    longZH:'制定选题排期，审核内容，以播放/互动/完播数据调整策略。\n负责2025 PMSL CSA Spring & Fall、2025 PMWC、2025 PMGC、2026 PMGO S1 EECA现场官方CIS社媒内容策划与制作。现场带领团队围绕赛事、明星选手拍摄制作图文、短视频、长视频内容。\n2025年粉丝净增长115K，观看量251.48M（同比+194.8%）。2026年社媒投流CTR同比+50%。',
+    longEN:'Set topics and posting schedules, check and approve content, and tuned strategy by views/engagement/completion-rate data.\nOwned official CIS social content on-site for 2025 PMSL CSA Spring & Fall, 2025 PMWC, 2025 PMGC and 2026 PMGO S1 EECA. Led content teams in filming and producing statics, reels, and LFVs for tournament progression and player story telling.\n2025 results: +115K net followers and 251.48M views (+194.8% YoY). 2026: +50% YoY CTR via continuous ad optimization.' },
+  { titleZH:'中亚区域市场营销', titleEN:'Central Asia Regional Marketing',
+    shortZH:'结合游戏版本或电竞赛事策划本地化营销推广。',
+    shortEN:'Built localized marketing campaigns around game patches and esports events.',
+    longZH:'2025 PMGC乌兹推广：将"首支全乌兹阵容晋级PMGC"升级为国家荣誉叙事。\n- 本地画家应援视频获280万播放；\n- 说唱歌手MillyMallymoe改编主题曲登顶Yandex Music乌兹热榜Top3；\n- 影院/大学观赛派对与城市巡游巴士，参与人数1000+，将国际赛事转化为粉丝可感知可参与的本地事件；\n- 乌兹国家奥委会与国家信息化部官员出席出征仪式，9家本地主流新闻频道和电视台报道。',
+    longEN:'2025 PMGC Uzbekistan campaign: amplified "first all-Uzbek roster qualifying for PMGC" as a national-pride story.\n- Tribute video with a renowned local painter — 2.8M views.\n- Theme-song remix with rapper MillyMallymoe — Top 3 on Yandex Music Uzbekistan.\n- Cinema and university watch parties; city-tour buses. 1000+ visits. Turned PMGC into a local celebration accessible fans at home.\n- Brought Uzbek Olympic Committee and Ministry of Digital Development officials to the send-off ceremony — 9 local news channels and TV stations covered.' }
+];
+
+const I18N = {
+  EN: { navSkills:'Skills View', navProjects:'Projects View', navSkillsShort:'Skills', navProjectsShort:'Projects', navContact:'Contact me',
+        skillsTitle:'What I am good at', projectsTitle:'Past Projects',
+        openTitle:'I AM<br/>OPEN TO WORK<span style="color:var(--brick);">.</span>',
+        daysWord:' days', daysCaption:'dedicated to esports',
+        contactLabel:'Let\u2019s Grow Together \u2198', trustedBy:'Trusted by',
+        heroSubname:'ZHAO ZIHANG',
+        slogan1:'Esports Project Manager',
+        slogan2:'Aiming to know something about everything in esports',
+        heroAria:'Esports Project Manager. Aiming to know something about everything in esports.',
+        emailBtn:'Email', wechatBtn:'WeChat', linkedinBtn:'LinkedIn',
+        backTop:'Back to top \u2191',
+        youSlotLabel:'&YOU',
+        logoTip_tencent:'2025\u20132026 \u00b7 PUBGM Eastern Europe & Central Asia Esports',
+        logoTip_heroesports:'2024\u20132025 \u00b7 Marketing & Talent Agency',
+        logoTip_sportfive:'2024 Internship \u00b7 Gaming & Esports Business Cooperation',
+        logoTip_tjsports:'2024 Internship \u00b7 Wild Rift League Management',
+        logoTip_cuhksz:'Master of Arts in EN\u2013ZH Interpreting',
+        logoTip_uestc:'Bachelor of Engineering',
+        logoTip_youslot:'I\u2019d like a spot as an esports project manager!',
+        couponTitle:'COFFEE COUPON',
+        thankSub:'You read all my cards! I\u2019d love to thank you with a cup of coffee \u2014 when I become your colleague :D',
+        thankSure:'SURE', thankBubble:'LET\u2019S BUBBLE TEA',
+        closeBtn:'Close', exampleLabel:'Example', descLabel:'Description', longLabel:'Detail',
+        skipLink:'Skip to main content' },
+  ZH: { navSkills:'\u4e2a\u4eba\u80fd\u529b\u89c6\u56fe', navProjects:'\u8fc7\u5f80\u9879\u76ee\u89c6\u56fe', navSkillsShort:'\u80fd\u529b', navProjectsShort:'\u9879\u76ee', navContact:'\u8054\u7cfb\u6211\u5427',
+        skillsTitle:'\u4e2a\u4eba\u80fd\u529b', projectsTitle:'\u8fc7\u5f80\u9879\u76ee',
+        openTitle:'\u5de5\u4f5c\u763e\u53c8\u72af\u4e86<span style="color:var(--brick);">.</span>',
+        daysWord:' \u5929', daysCaption:'\u6210\u4e3a\u7535\u7ade\u4eba\u5df2\u7ecf',
+        contactLabel:'\u6765\u5e2e\u6211\u6512\u5929\u6570\u5427\u2198', trustedBy:'\u611f\u8c22\u4fe1\u4efb',
+        heroSubname:'\u8d75\u5b50\u822a',
+        slogan1:'\u7535\u7ade\u9879\u76ee\u7ba1\u7406',
+        slogan2:'\u5373\u5c06\u6210\u4e3a\u7ade\u5708\u5168\u80fd\u578b\u9009\u624b',
+        heroAria:'\u7535\u7ade\u9879\u76ee\u7ba1\u7406 \u00b7 \u5373\u5c06\u6210\u4e3a\u7ade\u5708\u5168\u80fd\u578b\u9009\u624b',
+        emailBtn:'\u90ae\u7bb1', wechatBtn:'\u5fae\u4fe1', linkedinBtn:'\u9886\u82f1',
+        backTop:'\u56de\u5230\u9876\u90e8 \u2191',
+        youSlotLabel:'\u865a\u4f4d\u4ee5\u5f85\u60a8',
+        logoTip_tencent:'2025-2026\u00b7PUBGM\u4e1c\u6b27\u4e2d\u4e9a\u7535\u7ade\u7ecf\u7406',
+        logoTip_heroesports:'2024-2025\u00b7\u6d77\u5916KOL\u8425\u9500',
+        logoTip_sportfive:'2024\u00b7\u6e38\u620f\u7535\u7ade\u8d5e\u52a9\u5408\u4f5c\u5b9e\u4e60',
+        logoTip_tjsports:'2024\u00b7\u82f1\u96c4\u8054\u76df\u624b\u6e38\u8054\u76df\u8fd0\u8425\u5b9e\u4e60',
+        logoTip_cuhksz:'\u82f1\u8bed\u53e3\u8bd1\u7855\u58eb',
+        logoTip_uestc:'\u7535\u5b50\u4fe1\u606f\u5de5\u7a0b\u672c\u79d1',
+        logoTip_youslot:'\u5982\u6709\u7535\u7ade\u9879\u76ee\u7ba1\u7406\u5c97\u4f4d\uff0c\u8bf7\u8054\u7cfb\u6211~',
+        couponTitle:'\u5496\u5561\u5238',
+        thankSub:'\u4f60\u770b\u5b8c\u4e86\u6211\u7684\u6bcf\u4e00\u5f20\u5361\u7247\uff01\u7b49\u6211\u6210\u4e3a\u4f60\u7684\u540c\u4e8b\uff0c\u8bf7\u4f60\u559d\u676f\u5496\u5561\u4f5c\u4e3a\u611f\u8c22 :D',
+        thankSure:'\u6ca1\u95ee\u9898', thankBubble:'\u5976\u8336\u4e5f\u53ef\u4ee5',
+        closeBtn:'\u5173\u95ed', exampleLabel:'\u6848\u4f8b', descLabel:'\u63cf\u8ff0', longLabel:'\u8be6\u7ec6\u4ecb\u7ecd',
+        skipLink:'\u8df3\u5230\u4e3b\u5185\u5bb9' }
+};
+
+/* ───────── safeStorage: localStorage with try/catch fallback ───────── */
+const safeStorage = {
+  get(k){ try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v){ try { localStorage.setItem(k, v); } catch {} },
+  remove(k){ try { localStorage.removeItem(k); } catch {} }
+};
+function getJSON(k, fallback){ try { return JSON.parse(safeStorage.get(k)) ?? fallback; } catch { return fallback; } }
+
+let LANG = safeStorage.get('hazel-lang') || 'EN';
+/* Read progress is in-memory only — refreshing the page clears counts. */
+const STATE = {
+  readSkills: new Set(),
+  readProjects: new Set(),
+  thanked: false,
+  pendingThank: false
+};
+/* Clean up older persisted progress (one-time migration). */
+safeStorage.remove('hazel-read-skills');
+safeStorage.remove('hazel-read-projects');
+safeStorage.remove('hazel-thanked');
+function persist(){ /* read-state is in-memory only; nothing to persist here */ }
+
+const pager = document.getElementById('pager');
+function gotoPage(id){ const el = document.getElementById(id); if (!el || !pager) return; pager.scrollTo({ top: el.offsetTop, behavior: 'smooth' }); }
+document.querySelectorAll('[data-target]').forEach(btn => {
+  btn.addEventListener('click', (e) => { e.preventDefault(); gotoPage(btn.dataset.target); });
+});
+
+function escapeHTML(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function applyI18N(){
+  const dict = I18N[LANG];
+  document.documentElement.lang = LANG === 'ZH' ? 'zh' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.getElementById('lang-label').textContent = LANG === 'EN' ? '\u4e2d' : 'EN';
+  renderSkills();
+  renderProjects();
+  applyLogoTips();
+  bindDaysCounter();
+  setTimeout(updateRailMode, 80);
+}
+document.getElementById('lang-btn').addEventListener('click', () => {
+  LANG = LANG === 'EN' ? 'ZH' : 'EN';
+  safeStorage.set('hazel-lang', LANG);
+  applyI18N();
+});
+
+const START_DATE = '2024-07-10';
+function bindDaysCounter(){
+  const start = new Date(START_DATE + 'T00:00:00');
+  const days = Math.max(0, Math.floor((new Date() - start) / 86400000));
+  const cnt = document.getElementById('days-count');
+  if (!cnt) return;
+  const s = String(days);
+  if (s.length <= 1) {
+    cnt.innerHTML = '<span class="flip-digit">' + s + '</span>';
+  } else {
+    cnt.innerHTML = s.slice(0, -1) + '<span class="flip-digit">' + s.slice(-1) + '</span>';
+  }
+}
+
+/* ───────── Days ticker: nudge the last digit on an irregular cadence (domino flip) ───────── */
+(function startDaysTicker(){
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq.matches) return;
+  function tick(){
+    const flip = document.querySelector('#days-count .flip-digit');
+    const proj = document.getElementById('contact');
+    if (flip && proj) {
+      // only animate when contact page is visible enough
+      const r = proj.getBoundingClientRect();
+      const visible = r.top < window.innerHeight && r.bottom > 0;
+      if (visible) {
+        flip.classList.remove('flip');
+        // force reflow so the animation can re-trigger
+        // eslint-disable-next-line no-unused-expressions
+        flip.offsetWidth;
+        flip.classList.add('flip');
+      }
+    }
+    // schedule next tick at a random interval 2.4–4.6s for an "irregular pulse"
+    setTimeout(tick, 2400 + Math.random() * 2200);
+  }
+  setTimeout(tick, 1800);
+})();
+
+/* ───────── Trust marquee — real logo PNGs + &YOU slot + per-cell tooltip ───────── */
+/* Logo display order — change this array to reorder the marquee. */
+const TRUST_LOGOS = [
+  { id:'tencent',     src:'rotating-logos/tencent.png',     alt:'Tencent',     tipKey:'logoTip_tencent'     },
+  { id:'heroesports', src:'rotating-logos/heroesports.png', alt:'Heroesports', tipKey:'logoTip_heroesports' },
+  { id:'sportfive',   src:'rotating-logos/SPORTFIVE.png',   alt:'SPORTFIVE',   tipKey:'logoTip_sportfive'   },
+  { id:'tjsports',    src:'rotating-logos/tjsports.png',    alt:'TJ Sports',   tipKey:'logoTip_tjsports'    },
+  { id:'cuhksz',      src:'rotating-logos/cuhksz.png',      alt:'CUHKSZ',      tipKey:'logoTip_cuhksz'      },
+  { id:'uestc',       src:'rotating-logos/uestc.png',       alt:'UESTC',       tipKey:'logoTip_uestc'       },
+  { id:'youslot',     src:null,                              alt:'&YOU',        tipKey:'logoTip_youslot', isSlot:true }
+];
+
+(function renderTrustTrack(){
+  const track = document.getElementById('trust-track');
+  if (!track) return;
+  const frag = document.createDocumentFragment();
+  // duplicate twice for a seamless -50% loop
+  for (let i=0; i<2; i++){
+    TRUST_LOGOS.forEach(item => {
+      const cell = document.createElement('div');
+      cell.className = 'logo-cell' + (item.isSlot ? ' is-slot' : '');
+      cell.dataset.logoId = item.id;
+      cell.tabIndex = 0;
+      cell.setAttribute('aria-label', item.alt);
+      if (item.isSlot){
+        const span = document.createElement('span');
+        span.dataset.i18n = 'youSlotLabel';
+        span.textContent = '&YOU';
+        cell.appendChild(span);
+      } else {
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.alt = item.alt;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        cell.appendChild(img);
+      }
+      const tip = document.createElement('span');
+      tip.className = 'logo-tip-data'; /* hidden data carrier; styled by JS into the floater */
+      tip.dataset.tipKey = item.tipKey;
+      tip.style.display = 'none';
+      cell.appendChild(tip);
+      frag.appendChild(cell);
+    });
+  }
+  track.appendChild(frag);
+
+  // Global floating tooltip node (escapes the trust-strip's overflow:hidden).
+  let floater = document.getElementById('logo-tip-floater');
+  if (!floater){
+    floater = document.createElement('div');
+    floater.id = 'logo-tip-floater';
+    floater.setAttribute('role', 'tooltip');
+    document.body.appendChild(floater);
+  }
+  function showTip(cell){
+    const text = cell.dataset.tipText;
+    if (!text) return;
+    floater.textContent = text;
+    // Position above the cell, centered horizontally; clamp to viewport.
+    const r = cell.getBoundingClientRect();
+    floater.style.visibility = 'hidden';
+    floater.classList.add('show');
+    const tw = floater.offsetWidth;
+    const th = floater.offsetHeight;
+    let left = r.left + r.width / 2 - tw / 2;
+    const margin = 8;
+    left = Math.max(margin, Math.min(left, window.innerWidth - tw - margin));
+    let top = r.top - th - 12;
+    if (top < margin) top = r.bottom + 12;  // fall back below if no room above
+    floater.style.left = left + 'px';
+    floater.style.top  = top  + 'px';
+    floater.style.visibility = 'visible';
+  }
+  function hideTip(){
+    floater.classList.remove('show');
+  }
+  document.querySelectorAll('.logo-cell').forEach(cell => {
+    cell.addEventListener('mouseenter', () => showTip(cell));
+    cell.addEventListener('mouseleave', hideTip);
+    cell.addEventListener('focus',      () => showTip(cell));
+    cell.addEventListener('blur',       hideTip);
+  });
+  // Hide on scroll/resize so the floater never floats stale.
+  window.addEventListener('scroll', hideTip, true);
+  window.addEventListener('resize', hideTip);
+})();
+
+function applyLogoTips(){
+  const dict = I18N[LANG] || {};
+  document.querySelectorAll('.logo-cell').forEach(cell => {
+    const dataNode = cell.querySelector('.logo-tip-data');
+    const key = dataNode ? dataNode.dataset.tipKey : null;
+    const v = key && dict[key];
+    if (v && String(v).trim()){
+      cell.dataset.tipText = v;
+      cell.classList.remove('no-tip');
+    } else {
+      cell.dataset.tipText = '';
+      cell.classList.add('no-tip');
+    }
+  });
+}
+
+function renderSkills(){
+  const list = document.getElementById('skill-list');
+  list.innerHTML = '';
+  SKILLS.forEach((s, i) => {
+    const id = 's' + i;
+    const card = document.createElement('article');
+    card.className = 'skill-card' + (STATE.readSkills.has(id) ? ' read' : '');
+    card.dataset.skillId = id;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    const title = LANG === 'EN' ? s.titleEN : s.titleZH;
+    const desc = LANG === 'EN' ? s.descEN : s.descZH;
+    card.setAttribute('aria-label', title);
+    card.innerHTML =
+      '<div class="skill-illu"><span>0'+(i+1)+'</span></div>' +
+      '<div class="skill-body">' +
+        '<h3 class="skill-title">'+escapeHTML(title)+'</h3>' +
+        '<p class="skill-desc">'+escapeHTML(desc)+'</p>' +
+      '</div>';
+    card.addEventListener('click', () => openSkillModal(i));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSkillModal(i); }
+    });
+    list.appendChild(card);
+  });
+}
+
+function renderProjects(){
+  const rail = document.getElementById('projects-rail');
+  rail.innerHTML = '';
+  PROJECTS.forEach((p, i) => {
+    const id = 'p' + i;
+    const card = document.createElement('article');
+    card.className = 'diamond' + (STATE.readProjects.has(id) ? ' read' : '');
+    card.dataset.projectId = id;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    const title = LANG === 'EN' ? p.titleEN : p.titleZH;
+    const sh = LANG === 'EN' ? p.shortEN : p.shortZH;
+    card.setAttribute('aria-label', title);
+    card.innerHTML =
+      '<div class="tilt">' +
+        '<span class="tile-tag">P / 0'+(i+1)+'</span>' +
+        '<div class="diamond-inner">' +
+          '<h3>'+escapeHTML(title)+'</h3>' +
+          '<p>'+escapeHTML(sh)+'</p>' +
+        '</div>' +
+      '</div>';
+    card.addEventListener('click', () => openProjectModal(i));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProjectModal(i); }
+    });
+    rail.appendChild(card);
+  });
+}
+
+/* ───────── Modal w/ focus trap & restore ───────── */
+const detailModal = document.getElementById('detail-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalBody = document.getElementById('modal-body');
+const modalCloseBtn = document.getElementById('modal-close');
+let prevFocus = null;
+
+function getFocusable(root){
+  return Array.from(root.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+    .filter(el => el.offsetParent !== null || el === document.activeElement);
+}
+function trapTab(modalEl, e){
+  if (e.key !== 'Tab') return;
+  const f = getFocusable(modalEl);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
+function openModal(title, bodyHTML){
+  prevFocus = document.activeElement;
+  modalTitle.textContent = title;
+  modalBody.innerHTML = bodyHTML;
+  detailModal.classList.add('open');
+  detailModal.setAttribute('aria-hidden', 'false');
+  setTimeout(() => modalCloseBtn.focus(), 30);
+}
+function closeModal(){
+  detailModal.classList.remove('open');
+  detailModal.setAttribute('aria-hidden', 'true');
+  if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
+  if (STATE.pendingThank) {
+    STATE.pendingThank = false;
+    setTimeout(openThank, 280);
+  }
+}
+modalCloseBtn.addEventListener('click', closeModal);
+detailModal.addEventListener('click', (e) => { if (e.target === detailModal) closeModal(); });
+detailModal.addEventListener('keydown', (e) => trapTab(detailModal.querySelector('.modal'), e));
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (detailModal.classList.contains('open')) closeModal();
+    else closeThank();
+  }
+});
+
+function openSkillModal(i){
+  const dict = I18N[LANG];
+  const s = SKILLS[i];
+  const title = LANG === 'EN' ? s.titleEN : s.titleZH;
+  const desc = LANG === 'EN' ? s.descEN : s.descZH;
+  const ex = LANG === 'EN' ? s.exampleEN : s.exampleZH;
+  const html =
+    '<div class="section-label">'+dict.descLabel+'</div>' +
+    '<div>'+escapeHTML(desc)+'</div>' +
+    '<div class="section-label">'+dict.exampleLabel+'</div>' +
+    '<div>'+escapeHTML(ex)+'</div>';
+  openModal(title, html);
+  STATE.readSkills.add('s'+i);
+  persist();
+  renderSkills();
+  checkAllRead();
+}
+function openProjectModal(i){
+  const dict = I18N[LANG];
+  const p = PROJECTS[i];
+  const title = LANG === 'EN' ? p.titleEN : p.titleZH;
+  const sh = LANG === 'EN' ? p.shortEN : p.shortZH;
+  const lo = LANG === 'EN' ? p.longEN : p.longZH;
+  const html =
+    '<div class="section-label">'+dict.descLabel+'</div>' +
+    '<div>'+escapeHTML(sh)+'</div>' +
+    '<div class="section-label">'+dict.longLabel+'</div>' +
+    '<div>'+escapeHTML(lo)+'</div>';
+  openModal(title, html);
+  STATE.readProjects.add('p'+i);
+  persist();
+  renderProjects();
+  setTimeout(updateRailMode, 60);
+  checkAllRead();
+}
+
+const thankBackdrop = document.getElementById('thank-modal-backdrop');
+const thankCloseSureBtn = document.getElementById('thank-close-sure');
+const thankCloseBubbleBtn = document.getElementById('thank-close-bubble');
+function openThank(){
+  prevFocus = document.activeElement;
+  thankBackdrop.classList.add('open');
+  thankBackdrop.setAttribute('aria-hidden', 'false');
+  setTimeout(() => thankCloseSureBtn.focus(), 30);
+}
+function closeThank(){
+  thankBackdrop.classList.remove('open');
+  thankBackdrop.setAttribute('aria-hidden', 'true');
+  if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
+}
+thankCloseSureBtn.addEventListener('click', closeThank);
+thankCloseBubbleBtn.addEventListener('click', closeThank);
+thankBackdrop.addEventListener('click', (e) => { if (e.target === thankBackdrop) closeThank(); });
+thankBackdrop.addEventListener('keydown', (e) => trapTab(thankBackdrop.querySelector('.coupon'), e));
+
+function checkAllRead(){
+  if (STATE.readSkills.size >= SKILLS.length && STATE.readProjects.size >= PROJECTS.length && !STATE.thanked) {
+    STATE.thanked = true;
+    persist();
+    STATE.pendingThank = true;
+  }
+}
+
+/* ───────── Hero mouse-parallax (PNG + HAZEL + slogan follow cursor lightly) ───────── */
+(function(){
+  const hero = document.getElementById('hero');
+  const stage = hero ? hero.querySelector('.hero-stage') : null;
+  if (!hero || !stage) return;
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq.matches) return;
+  let raf = 0, tx = 0, ty = 0, cx = 0, cy = 0;
+  function tick(){
+    tx += (cx - tx) * 0.08;
+    ty += (cy - ty) * 0.08;
+    stage.style.setProperty('--mx', tx.toFixed(3));
+    stage.style.setProperty('--my', ty.toFixed(3));
+    if (Math.abs(cx - tx) > 0.001 || Math.abs(cy - ty) > 0.001) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      raf = 0;
+    }
+  }
+  hero.addEventListener('mousemove', (e) => {
+    const r = hero.getBoundingClientRect();
+    cx = (e.clientX - r.left) / r.width  - 0.5;
+    cy = (e.clientY - r.top)  / r.height - 0.5;
+    if (!raf) raf = requestAnimationFrame(tick);
+  });
+  hero.addEventListener('mouseleave', () => {
+    cx = 0; cy = 0;
+    if (!raf) raf = requestAnimationFrame(tick);
+  });
+})();
+
+/* ───────── Project rail: arrows, autoplay, drag, idle-resume ───────── */
+let railAutoTimer = null;
+let userInteracted = false;
+let idleTimer = null;
+function flagInteract(){
+  userInteracted = true;
+  if (idleTimer) clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => { userInteracted = false; }, 6000);
+}
+function updateRailMode(){
+  const rail = document.getElementById('projects-rail');
+  const arrows = document.getElementById('proj-arrows');
+  if (!rail || !arrows) return;
+  const overflow = rail.scrollWidth - rail.clientWidth > 4;
+  if (overflow) {
+    rail.classList.remove('fits');
+    arrows.classList.remove('hidden');
+    startAutoAdvance();
+  } else {
+    rail.classList.add('fits');
+    arrows.classList.add('hidden');
+    stopAutoAdvance();
+  }
+}
+function startAutoAdvance(){
+  stopAutoAdvance();
+  railAutoTimer = setInterval(() => {
+    if (userInteracted) return;
+    const rail = document.getElementById('projects-rail');
+    if (!rail) return;
+    const proj = document.getElementById('projects');
+    const r = proj.getBoundingClientRect();
+    const visible = r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5;
+    if (!visible) return;
+    const atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
+    if (atEnd) rail.scrollTo({ left: 0, behavior: 'smooth' });
+    else rail.scrollBy({ left: stepSize(), behavior: 'smooth' });
+  }, 3500);
+}
+function stopAutoAdvance(){ if (railAutoTimer) { clearInterval(railAutoTimer); railAutoTimer = null; } }
+function stepSize(){
+  const rail = document.getElementById('projects-rail');
+  const card = rail.querySelector('.diamond');
+  if (!card) return 320;
+  const styles = getComputedStyle(rail);
+  const gap = parseFloat(styles.columnGap || styles.gap || 60);
+  return card.getBoundingClientRect().width + gap;
+}
+(function(){
+  const rail = document.getElementById('projects-rail');
+  const prevBtn = document.getElementById('proj-prev');
+  const nextBtn = document.getElementById('proj-next');
+  if (!rail) return;
+  prevBtn.addEventListener('click', () => { flagInteract(); rail.scrollBy({ left: -stepSize(), behavior: 'smooth' }); });
+  nextBtn.addEventListener('click', () => { flagInteract(); rail.scrollBy({ left:  stepSize(), behavior: 'smooth' }); });
+  rail.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { flagInteract(); return; }
+    if (e.shiftKey) { e.preventDefault(); rail.scrollLeft += e.deltaY; flagInteract(); }
+  }, { passive: true });
+  rail.addEventListener('touchstart', flagInteract, { passive: true });
+  rail.addEventListener('mousedown', flagInteract);
+  let isDown = false, startX = 0, startScroll = 0, dragged = 0;
+  rail.addEventListener('mousedown', (e) => { isDown = true; dragged = 0; startX = e.pageX; startScroll = rail.scrollLeft; });
+  window.addEventListener('mouseup', () => { isDown = false; });
+  window.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    const dx = e.pageX - startX;
+    dragged = Math.abs(dx);
+    rail.scrollLeft = startScroll - dx;
+  });
+  rail.addEventListener('click', (e) => {
+    if (dragged > 6) { e.stopPropagation(); e.preventDefault(); dragged = 0; }
+  }, true);
+})();
+window.addEventListener('resize', () => { setTimeout(updateRailMode, 100); });
+
+/* ───────── Topbar active page indicator ─────────
+   We use a scroll-position match (not IntersectionObserver) — observer only fires
+   when crossing thresholds, so a manual nav click that lands exactly on a page can
+   leave the previously highlighted button stuck. Computing the current page from
+   pager.scrollTop on every scroll is bullet-proof. */
+(function(){
+  if (!pager) return;
+  const navMap = {
+    skills:   document.querySelector('[data-target="skills"]'),
+    projects: document.querySelector('[data-target="projects"]'),
+    contact:  document.querySelector('[data-target="contact"]')
+  };
+  const pages = ['hero', 'skills', 'projects', 'contact'];
+  let raf = 0;
+  function syncActive(){
+    raf = 0;
+    const h = pager.clientHeight || 1;
+    const idx = Math.round(pager.scrollTop / h);
+    const id = pages[Math.max(0, Math.min(pages.length - 1, idx))];
+    Object.values(navMap).forEach(b => b && b.classList.remove('is-active'));
+    if (navMap[id]) navMap[id].classList.add('is-active');
+  }
+  function onScroll(){
+    if (!raf) raf = requestAnimationFrame(syncActive);
+  }
+  pager.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  syncActive();
+})();
+
+applyI18N();
+bindDaysCounter();
+setTimeout(updateRailMode, 120);
+</script>
+</body>
+</html>
