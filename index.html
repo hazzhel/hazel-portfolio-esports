@@ -398,6 +398,13 @@ html[lang="zh"] .coupon-sub { font-family: "Noto Sans SC", system-ui, sans-serif
   .thank-modal h3 { text-shadow: 4px 4px 0 var(--ink); }
 }
 
+/* WeChat QR modal */
+.wechat-modal { max-width: min(420px, 92vw); }
+.wechat-body { display: grid; place-items: center; gap: 16px; padding: 24px 22px 28px; white-space: normal; }
+.wechat-qr { width: min(280px, 70vw); height: auto; display: block; border: 2px solid var(--ink); box-shadow: var(--shadow-hard-sm); background: var(--bg); }
+.wechat-hint { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-align: center; line-height: 1.5; margin: 0; }
+html[lang="zh"] .wechat-hint { font-family: "Noto Sans SC", system-ui, sans-serif; font-size: 12px; letter-spacing: 0.04em; text-transform: none; }
+
 /* ───────── A11y / Focus / Skip-link / Visually-hidden ───────── */
 :focus-visible { outline: 3px solid var(--brick); outline-offset: 2px; }
 .skip-link { position: absolute; left: -9999px; top: 0; z-index: 300; background: var(--ink); color: var(--bg); padding: 10px 16px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; border: 2px solid var(--brick); }
@@ -500,15 +507,15 @@ html[lang="zh"] .coupon-sub { font-family: "Noto Sans SC", system-ui, sans-serif
     <div class="contact-group">
       <span class="label" data-i18n="contactLabel">Contact me ↘</span>
       <div class="contact-buttons">
-        <a class="contact-btn" href="mailto:hazel@example.com">
+        <a class="contact-btn" href="mailto:hazzhel@outlook.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="5" width="18" height="14"/><polyline points="3 7 12 13 21 7"/></svg>
           <span data-i18n="emailBtn">Email</span>
         </a>
-        <a class="contact-btn" href="#wechat">
+        <button class="contact-btn" type="button" id="wechat-btn" aria-haspopup="dialog" aria-controls="wechat-modal-backdrop">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><circle cx="12" cy="12" r="9"/><path d="M8 11 h.01 M12 11 h.01 M16 11 h.01"/></svg>
           <span data-i18n="wechatBtn">WeChat</span>
-        </a>
-        <a class="contact-btn" href="#linkedin">
+        </button>
+        <a class="contact-btn" href="https://www.linkedin.com/in/zhaozihang/" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="3" width="18" height="18"/><line x1="8" y1="10" x2="8" y2="17"/><path d="M12 17v-4a3 3 0 0 1 6 0v4"/></svg>
           <span data-i18n="linkedinBtn">LinkedIn</span>
         </a>
@@ -576,6 +583,19 @@ html[lang="zh"] .coupon-sub { font-family: "Noto Sans SC", system-ui, sans-serif
   </div>
 </div>
 
+<div class="modal-backdrop" id="wechat-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="wechat-modal-title" aria-hidden="true">
+  <div class="modal wechat-modal" role="document">
+    <div class="modal-head">
+      <h3 id="wechat-modal-title" data-i18n="wechatModalTitle">SCAN MY WECHAT</h3>
+      <button class="modal-close" id="wechat-modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body wechat-body">
+      <img src="contact/wechat.jpg" alt="WeChat QR code" class="wechat-qr"/>
+      <p class="wechat-hint" data-i18n="wechatHint">Open WeChat &rarr; Scan &rarr; Add me as a friend.</p>
+    </div>
+  </div>
+</div>
+
 <script>
 const SKILLS = [
   { titleZH:'赛事项目全流程统筹与管理', titleEN:'End-to-End Tournament Project Management',
@@ -639,6 +659,7 @@ const I18N = {
         slogan2:'Aiming to know something about everything in esports',
         heroAria:'Esports Project Manager. Aiming to know something about everything in esports.',
         emailBtn:'Email', wechatBtn:'WeChat', linkedinBtn:'LinkedIn',
+        wechatModalTitle:'SCAN MY WECHAT', wechatHint:'Open WeChat \u2192 Scan \u2192 Add me as a friend.',
         backTop:'Back to top \u2191',
         youSlotLabel:'&YOU',
         logoTip_tencent:'2025\u20132026 \u00b7 PUBGM Eastern Europe & Central Asia Esports',
@@ -663,6 +684,7 @@ const I18N = {
         slogan2:'\u5373\u5c06\u6210\u4e3a\u7ade\u5708\u5168\u80fd\u578b\u9009\u624b',
         heroAria:'\u7535\u7ade\u9879\u76ee\u7ba1\u7406 \u00b7 \u5373\u5c06\u6210\u4e3a\u7ade\u5708\u5168\u80fd\u578b\u9009\u624b',
         emailBtn:'\u90ae\u7bb1', wechatBtn:'\u5fae\u4fe1', linkedinBtn:'\u9886\u82f1',
+        wechatModalTitle:'\u626b\u4e00\u626b\u52a0\u5fae\u4fe1', wechatHint:'\u6253\u5f00\u5fae\u4fe1 \u2192 \u626b\u4e00\u626b \u2192 \u52a0\u6211\u4e3a\u597d\u53cb',
         backTop:'\u56de\u5230\u9876\u90e8 \u2191',
         youSlotLabel:'\u865a\u4f4d\u4ee5\u5f85\u60a8',
         logoTip_tencent:'2025-2026\u00b7PUBGM\u4e1c\u6b27\u4e2d\u4e9a\u7535\u7ade\u7ecf\u7406',
@@ -971,6 +993,7 @@ detailModal.addEventListener('keydown', (e) => trapTab(detailModal.querySelector
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     if (detailModal.classList.contains('open')) closeModal();
+    else if (wechatBackdrop.classList.contains('open')) closeWechat();
     else closeThank();
   }
 });
@@ -1029,6 +1052,26 @@ thankCloseSureBtn.addEventListener('click', closeThank);
 thankCloseBubbleBtn.addEventListener('click', closeThank);
 thankBackdrop.addEventListener('click', (e) => { if (e.target === thankBackdrop) closeThank(); });
 thankBackdrop.addEventListener('keydown', (e) => trapTab(thankBackdrop.querySelector('.coupon'), e));
+
+/* WeChat QR modal */
+const wechatBackdrop = document.getElementById('wechat-modal-backdrop');
+const wechatBtn = document.getElementById('wechat-btn');
+const wechatCloseBtn = document.getElementById('wechat-modal-close');
+function openWechat(){
+  prevFocus = document.activeElement;
+  wechatBackdrop.classList.add('open');
+  wechatBackdrop.setAttribute('aria-hidden', 'false');
+  setTimeout(() => wechatCloseBtn.focus(), 30);
+}
+function closeWechat(){
+  wechatBackdrop.classList.remove('open');
+  wechatBackdrop.setAttribute('aria-hidden', 'true');
+  if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
+}
+wechatBtn.addEventListener('click', openWechat);
+wechatCloseBtn.addEventListener('click', closeWechat);
+wechatBackdrop.addEventListener('click', (e) => { if (e.target === wechatBackdrop) closeWechat(); });
+wechatBackdrop.addEventListener('keydown', (e) => trapTab(wechatBackdrop.querySelector('.modal'), e));
 
 function checkAllRead(){
   if (STATE.readSkills.size >= SKILLS.length && STATE.readProjects.size >= PROJECTS.length && !STATE.thanked) {
