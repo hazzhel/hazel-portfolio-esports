@@ -46,3 +46,4 @@ python -m http.server 8080
 ## License
 
 © 2026 Zihang "HAZEL" Zhao. All rights reserved.
+# hazel-portfolio
