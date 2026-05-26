@@ -286,6 +286,103 @@ html[lang="zh"] .hero-subname { font-family: "Noto Sans SC", system-ui, sans-ser
 .diamond:nth-child(2n) .tile-tag,
 .diamond:nth-child(3n) .tile-tag,
 .diamond:nth-child(4n) .tile-tag { color: var(--ink); background: var(--bg); }
+
+/* photo strip on the bottom edge of each diamond card (peek thumbnails) */
+.diamond .photo-strip {
+  position: absolute;
+  left: 14px; right: 14px; bottom: 12px;
+  z-index: 3;
+  display: flex;
+  gap: 6px;
+  overflow: hidden;
+  pointer-events: none;
+  height: clamp(30px, 4.6vh, 42px);
+  align-items: center;
+}
+.diamond .photo-strip .thumb {
+  flex: 0 0 auto;
+  height: 100%;
+  width: auto;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  object-fit: cover;
+  background: var(--ink);
+  display: block;
+}
+/* shrink the inner content area + push it up so it doesn't collide with the bottom photo strip */
+.diamond .diamond-inner {
+  height: 58%;
+  align-self: start;
+  margin-top: 9%;
+}
+
+/* ───────── Modal photo carousel (project detail bottom strip) ───────── */
+.modal-photos { margin-top: 18px; white-space: normal; }
+.modal-photos .photos-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brick);
+  margin: 14px 0 10px;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.modal-photos .photos-arrows { display: flex; gap: 6px; }
+.modal-photos .photos-arrows.hidden { display: none; }
+.modal-photos .photos-arrows button {
+  width: 28px; height: 28px;
+  background: var(--bg);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 0 var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.modal-photos .photos-arrows button:hover {
+  background: var(--ink);
+  color: var(--bg);
+  transform: translate(-1px,-1px);
+  box-shadow: 3px 3px 0 0 var(--ink);
+}
+.modal-photos .photos-arrows button:active { transform: translate(1px,1px); box-shadow: 0 0 0 0 var(--ink); }
+.modal-photos .photos-arrows svg { width: 14px; height: 14px; }
+.modal-photos .photos-rail {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  padding: 4px 2px 8px;
+  cursor: grab;
+}
+.modal-photos .photos-rail::-webkit-scrollbar { display: none; }
+.modal-photos .photos-rail.dragging { cursor: grabbing; scroll-behavior: auto; }
+.modal-photos .photos-rail img {
+  flex: 0 0 auto;
+  height: clamp(150px, 28vh, 240px);
+  width: auto;
+  max-width: none;
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 0 var(--ink);
+  object-fit: cover;
+  scroll-snap-align: start;
+  background: var(--ink);
+  user-select: none;
+  -webkit-user-drag: none;
+  display: block;
+}
+@media (max-width: 767px){
+  .modal-photos .photos-rail img { height: clamp(130px, 22vh, 180px); }
+}
 .proj-arrows { display: flex; gap: 14px; margin-top: 4px; justify-content: center; flex: 0 0 auto; }
 .proj-arrows.hidden { display: none; }
 .proj-arrows button { width: clamp(40px, 5vh, 50px); height: clamp(40px, 5vh, 50px); background: var(--bg); border: 2px solid var(--ink); box-shadow: var(--shadow-hard-sm); display: grid; place-items: center; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease); }
@@ -635,17 +732,45 @@ const PROJECTS = [
     shortZH:'负责EECA区域多个中小型赛事的规划与执行。',
     shortEN:'Owned planning and execution of multiple tournaments across the EECA region.',
     longZH:'统筹EECA区域13个国家的大众赛事（线上）及区域赛事（线下）。\n赛事全流程管理：推广、视觉、直播、社媒、选手、赞助商权益执行。最多同时对接9个供应商。零事故交付，报名人数目标达成率169%。\n\n国家级业余赛事：2025 PMCO EASTERN EUROPE Spring & Fall、2025 PMCO CENTRAL ASIA Fall、2025 PMNC UZBEKISTAN Fall、2026 PMNC Spring、2026 PMCO Spring EEU/CA。\n区域职业赛事：2026 PMGO S1 EECA FINALS。',
-    longEN:'Led both online amateur tournaments across 13 EECA countries and offline regional events. Set goals and budget per event, designed schedules, formats and qualification systems.\nFull-stack tournament management: marketing, visual design, broadcast production, social media, player management, sponsor comms and rights execution.\nManaged up to 9 vendors and partners in parallel; coordinated cross-functional teams. Delivered zero-incident production. Hit 169% of the registration target.\n\nNational-level amateur events: 2025 PMCO EASTERN EUROPE Spring & Fall, 2025 PMCO CENTRAL ASIA Fall, 2025 PMNC UZBEKISTAN Fall, 2026 PMNC Spring, 2026 PMCO Spring EEU/CA.\nRegional pro events: 2026 PMGO S1 EECA FINALS.' },
+    longEN:'Led both online amateur tournaments across 13 EECA countries and offline regional events. Set goals and budget per event, designed schedules, formats and qualification systems.\nFull-stack tournament management: marketing, visual design, broadcast production, social media, player management, sponsor comms and rights execution.\nManaged up to 9 vendors and partners in parallel; coordinated cross-functional teams. Delivered zero-incident production. Hit 169% of the registration target.\n\nNational-level amateur events: 2025 PMCO EASTERN EUROPE Spring & Fall, 2025 PMCO CENTRAL ASIA Fall, 2025 PMNC UZBEKISTAN Fall, 2026 PMNC Spring, 2026 PMCO Spring EEU/CA.\nRegional pro events: 2026 PMGO S1 EECA FINALS.',
+    photos:[
+      'photos/tournaments/eecachamp.JPG',
+      'photos/tournaments/eecaphoto.JPG',
+      'photos/tournaments/pmgoeecatrophy.JPG',
+      'photos/tournaments/pmcoca2025.png',
+      'photos/tournaments/pmcocaspring2026kv.png',
+      'photos/tournaments/pmcoeeufall2025kv.png',
+      'photos/tournaments/pmnckzspring2026kv.png',
+      'photos/tournaments/pmncuz2025.jpg',
+      'photos/tournaments/pmncuz2026.png'
+    ] },
   { titleZH:'PUBGM CIS电竞社媒矩阵运营', titleEN:'PUBGM CIS Esports Social Channels Operations',
     shortZH:'负责PUBGM CIS电竞官方Instagram、TikTok、YouTube、Telegram账号的运营。',
     shortEN:'Operated PUBGM CIS official channels on Instagram, TikTok, YouTube and Telegram.',
     longZH:'制定选题排期，审核内容，以播放/互动/完播数据调整策略。\n负责2025 PMSL CSA Spring & Fall、2025 PMWC、2025 PMGC、2026 PMGO S1 EECA现场官方CIS社媒内容策划与制作。现场带领团队围绕赛事、明星选手拍摄制作图文、短视频、长视频内容。\n2025年粉丝净增长115K，观看量251.48M（同比+194.8%）。2026年社媒投流CTR同比+50%。',
-    longEN:'Set topics and posting schedules, check and approve content, and tuned strategy by views/engagement/completion-rate data.\nOwned official CIS social content on-site for 2025 PMSL CSA Spring & Fall, 2025 PMWC, 2025 PMGC and 2026 PMGO S1 EECA. Led content teams in filming and producing statics, reels, and LFVs for tournament progression and player story telling.\n2025 results: +115K net followers and 251.48M views (+194.8% YoY). 2026: +50% YoY CTR via continuous ad optimization.' },
+    longEN:'Set topics and posting schedules, check and approve content, and tuned strategy by views/engagement/completion-rate data.\nOwned official CIS social content on-site for 2025 PMSL CSA Spring & Fall, 2025 PMWC, 2025 PMGC and 2026 PMGO S1 EECA. Led content teams in filming and producing statics, reels, and LFVs for tournament progression and player story telling.\n2025 results: +115K net followers and 251.48M views (+194.8% YoY). 2026: +50% YoY CTR via continuous ad optimization.',
+    photos:[
+      'photos/content-social/cooking.png',
+      'photos/content-social/doksmile.png',
+      'photos/content-social/pmgccontent.png',
+      'photos/content-social/pmncuzcontent.png',
+      'photos/content-social/top.png',
+      'photos/content-social/uzbekteam.png'
+    ] },
   { titleZH:'中亚区域市场营销', titleEN:'Central Asia Regional Marketing',
     shortZH:'结合游戏版本或电竞赛事策划本地化营销推广。',
     shortEN:'Built localized marketing campaigns around game patches and esports events.',
     longZH:'2025 PMGC乌兹推广：将"首支全乌兹阵容晋级PMGC"升级为国家荣誉叙事。\n- 本地画家应援视频获280万播放；\n- 说唱歌手MillyMallymoe改编主题曲登顶Yandex Music乌兹热榜Top3；\n- 影院/大学观赛派对与城市巡游巴士，参与人数1000+，将国际赛事转化为粉丝可感知可参与的本地事件；\n- 乌兹国家奥委会与国家信息化部官员出席出征仪式，9家本地主流新闻频道和电视台报道。',
-    longEN:'2025 PMGC Uzbekistan campaign: amplified "first all-Uzbek roster qualifying for PMGC" as a national-pride story.\n- Tribute video with a renowned local painter — 2.8M views.\n- Theme-song remix with rapper MillyMallymoe — Top 3 on Yandex Music Uzbekistan.\n- Cinema and university watch parties; city-tour buses. 1000+ visits. Turned PMGC into a local celebration accessible fans at home.\n- Brought Uzbek Olympic Committee and Ministry of Digital Development officials to the send-off ceremony — 9 local news channels and TV stations covered.' }
+    longEN:'2025 PMGC Uzbekistan campaign: amplified "first all-Uzbek roster qualifying for PMGC" as a national-pride story.\n- Tribute video with a renowned local painter — 2.8M views.\n- Theme-song remix with rapper MillyMallymoe — Top 3 on Yandex Music Uzbekistan.\n- Cinema and university watch parties; city-tour buses. 1000+ visits. Turned PMGC into a local celebration accessible fans at home.\n- Brought Uzbek Olympic Committee and Ministry of Digital Development officials to the send-off ceremony — 9 local news channels and TV stations covered.',
+    photos:[
+      'photos/marketing-events/artist.png',
+      'photos/marketing-events/barkle.jpg',
+      'photos/marketing-events/bus.jpg',
+      'photos/marketing-events/podcast.png',
+      'photos/marketing-events/rapper.png',
+      'photos/marketing-events/sevimlitvpmgc.png',
+      'photos/marketing-events/watchpartyuni.jpg'
+    ] }
 ];
 
 const I18N = {
@@ -934,6 +1059,13 @@ function renderProjects(){
     const title = LANG === 'EN' ? p.titleEN : p.titleZH;
     const sh = LANG === 'EN' ? p.shortEN : p.shortZH;
     card.setAttribute('aria-label', title);
+    // peek thumbnails (max 4) inside the card, hidden when no photos
+    const peekPhotos = (p.photos || []).slice(0, 4);
+    const peekHTML = peekPhotos.length
+      ? '<div class="photo-strip" aria-hidden="true">' +
+          peekPhotos.map(src => '<img class="thumb" src="'+escapeHTML(src)+'" alt="" loading="lazy">').join('') +
+        '</div>'
+      : '';
     card.innerHTML =
       '<div class="tilt">' +
         '<span class="tile-tag">P / 0'+(i+1)+'</span>' +
@@ -941,6 +1073,7 @@ function renderProjects(){
           '<h3>'+escapeHTML(title)+'</h3>' +
           '<p>'+escapeHTML(sh)+'</p>' +
         '</div>' +
+        peekHTML +
       '</div>';
     card.addEventListener('click', () => openProjectModal(i));
     card.addEventListener('keydown', (e) => {
@@ -1021,17 +1154,115 @@ function openProjectModal(i){
   const title = LANG === 'EN' ? p.titleEN : p.titleZH;
   const sh = LANG === 'EN' ? p.shortEN : p.shortZH;
   const lo = LANG === 'EN' ? p.longEN : p.longZH;
+  const photos = p.photos || [];
+  const photosHTML = photos.length
+    ? '<div class="modal-photos">' +
+        '<div class="photos-label">' +
+          '<span>' + (LANG === 'EN' ? 'Photos' : '\u7167\u7247\u56de\u987e') + '</span>' +
+          '<div class="photos-arrows" aria-hidden="true">' +
+            '<button type="button" data-dir="-1" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 6 9 12l6 6"/></svg></button>' +
+            '<button type="button" data-dir="1" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m9 6 6 6-6 6"/></svg></button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="photos-rail" tabindex="0" aria-label="' + (LANG === 'EN' ? 'Project photos, scroll horizontally' : '\u9879\u76ee\u7167\u7247\uff0c\u6a2a\u5411\u6eda\u52a8') + '">' +
+          photos.map(src => '<img src="'+escapeHTML(src)+'" alt="" loading="lazy" draggable="false">').join('') +
+        '</div>' +
+      '</div>'
+    : '';
   const html =
     '<div class="section-label">'+dict.descLabel+'</div>' +
     '<div>'+escapeHTML(sh)+'</div>' +
     '<div class="section-label">'+dict.longLabel+'</div>' +
-    '<div>'+escapeHTML(lo)+'</div>';
+    '<div>'+escapeHTML(lo)+'</div>' +
+    photosHTML;
   openModal(title, html);
+  initPhotoCarousel();
   STATE.readProjects.add('p'+i);
   persist();
   renderProjects();
   setTimeout(updateRailMode, 60);
   checkAllRead();
+}
+
+/* Initialize the modal photo carousel: arrow buttons, drag-to-scroll,
+   and toggle the arrow visibility based on whether content overflows. */
+function initPhotoCarousel(){
+  const wrap = modalBody.querySelector('.modal-photos');
+  if (!wrap) return;
+  const rail = wrap.querySelector('.photos-rail');
+  const arrows = wrap.querySelector('.photos-arrows');
+  if (!rail) return;
+
+  const updateArrows = () => {
+    const overflows = rail.scrollWidth > rail.clientWidth + 4;
+    if (arrows) arrows.classList.toggle('hidden', !overflows);
+  };
+
+  // Wait until images load to measure overflow correctly
+  const imgs = rail.querySelectorAll('img');
+  let pending = imgs.length;
+  if (pending === 0) updateArrows();
+  imgs.forEach(img => {
+    if (img.complete) {
+      if (--pending <= 0) updateArrows();
+    } else {
+      img.addEventListener('load',  () => { if (--pending <= 0) updateArrows(); }, { once: true });
+      img.addEventListener('error', () => { if (--pending <= 0) updateArrows(); }, { once: true });
+    }
+  });
+  window.addEventListener('resize', updateArrows);
+
+  // Arrow scrolling
+  if (arrows) {
+    arrows.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dir = parseInt(btn.dataset.dir, 10) || 1;
+        const step = Math.max(rail.clientWidth * 0.8, 200);
+        rail.scrollBy({ left: dir * step, behavior: 'smooth' });
+      });
+    });
+  }
+
+  // Drag to scroll (mouse + touch via pointer events)
+  let isDown = false, startX = 0, startLeft = 0, moved = false;
+  rail.addEventListener('pointerdown', (e) => {
+    isDown = true; moved = false;
+    startX = e.clientX;
+    startLeft = rail.scrollLeft;
+    rail.classList.add('dragging');
+    rail.setPointerCapture(e.pointerId);
+  });
+  rail.addEventListener('pointermove', (e) => {
+    if (!isDown) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    rail.scrollLeft = startLeft - dx;
+  });
+  const endDrag = (e) => {
+    if (!isDown) return;
+    isDown = false;
+    rail.classList.remove('dragging');
+    try { rail.releasePointerCapture(e.pointerId); } catch {}
+  };
+  rail.addEventListener('pointerup', endDrag);
+  rail.addEventListener('pointercancel', endDrag);
+  rail.addEventListener('pointerleave', endDrag);
+  // prevent click-after-drag selection bug
+  rail.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+  // Wheel: vertical scroll → horizontal
+  rail.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      rail.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+
+  // Keyboard arrow support when rail is focused
+  rail.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); rail.scrollBy({ left:  rail.clientWidth * 0.8, behavior:'smooth' }); }
+    else if (e.key === 'ArrowLeft')  { e.preventDefault(); rail.scrollBy({ left: -rail.clientWidth * 0.8, behavior:'smooth' }); }
+  });
 }
 
 const thankBackdrop = document.getElementById('thank-modal-backdrop');
