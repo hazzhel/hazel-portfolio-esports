@@ -269,24 +269,6 @@ html[lang="zh"] .hero-subname { font-family: "Noto Sans SC", system-ui, sans-ser
 .diamond:nth-child(3n) p { color: rgba(255,255,255,.9); }
 .diamond:nth-child(4n) .tilt { background: var(--teal-deep); color: var(--bg); }
 .diamond:nth-child(4n) p { color: rgba(255,255,255,.85); }
-/* tournament-tile little tag in upper left */
-.diamond .tile-tag {
-  position: absolute;
-  top: 12px; left: 12px;
-  z-index: 3;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--bg);
-  border: 2px solid var(--ink);
-  padding: 3px 7px;
-  pointer-events: none;
-}
-.diamond:nth-child(2n) .tile-tag,
-.diamond:nth-child(3n) .tile-tag,
-.diamond:nth-child(4n) .tile-tag { color: var(--ink); background: var(--bg); }
 
 /* photo strip on the bottom edge of each diamond card (peek thumbnails) */
 .diamond .photo-strip {
@@ -1092,7 +1074,6 @@ function renderProjects(){
       : '';
     card.innerHTML =
       '<div class="tilt">' +
-        '<span class="tile-tag">P / 0'+(i+1)+'</span>' +
         '<div class="diamond-inner">' +
           '<h3>'+escapeHTML(title)+'</h3>' +
           '<p>'+escapeHTML(sh)+'</p>' +
