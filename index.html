@@ -10,6 +10,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:image" content="hero_cat.png" />
 <meta name="twitter:card" content="summary_large_image" />
+<link rel="preload" as="image" href="hero_cat.webp" type="image/webp" fetchpriority="high" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Jersey+20&family=Poppins:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" />
@@ -309,6 +310,7 @@ html[lang="zh"] .hero-subname { font-family: "Noto Sans SC", system-ui, sans-ser
   background: var(--ink);
   display: block;
 }
+.diamond .photo-strip picture { flex: 0 0 auto; height: 100%; display: block; }
 /* shrink the inner content area + push it up so it doesn't collide with the bottom photo strip */
 .diamond .diamond-inner {
   height: 58%;
@@ -382,7 +384,10 @@ html[lang="zh"] .hero-subname { font-family: "Noto Sans SC", system-ui, sans-ser
 }
 @media (max-width: 767px){
   .modal-photos .photos-rail img { height: clamp(130px, 22vh, 180px); }
+  .modal-photos .photos-rail picture { height: clamp(130px, 22vh, 180px); }
 }
+.modal-photos .photos-rail picture { flex: 0 0 auto; display: block; height: clamp(150px, 28vh, 240px); scroll-snap-align: start; }
+.modal-photos .photos-rail picture img { height: 100%; }
 .proj-arrows { display: flex; gap: 14px; margin-top: 4px; justify-content: center; flex: 0 0 auto; }
 .proj-arrows.hidden { display: none; }
 .proj-arrows button { width: clamp(40px, 5vh, 50px); height: clamp(40px, 5vh, 50px); background: var(--bg); border: 2px solid var(--ink); box-shadow: var(--shadow-hard-sm); display: grid; place-items: center; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease); }
@@ -555,7 +560,10 @@ html[lang="zh"] .wechat-hint { font-family: "Noto Sans SC", system-ui, sans-seri
   <section class="page hero" id="hero" data-page="0">
     <div class="hero-inner">
       <div class="hero-stage">
-        <img class="hero-img" src="hero_cat.png" alt="" loading="eager" decoding="async" fetchpriority="high" />
+        <picture>
+          <source srcset="hero_cat.webp" type="image/webp" />
+          <img class="hero-img" src="hero_cat.png" alt="" width="1200" height="1077" loading="eager" decoding="async" fetchpriority="high" />
+        </picture>
         <div class="hero-overlay">
           <p class="hero-subname" data-i18n="heroSubname">ZHAO ZIHANG · HAZEL</p>
           <p class="hero-name" aria-hidden="true">HAZEL</p>
@@ -687,7 +695,10 @@ html[lang="zh"] .wechat-hint { font-family: "Noto Sans SC", system-ui, sans-seri
       <button class="modal-close" id="wechat-modal-close" aria-label="Close">×</button>
     </div>
     <div class="modal-body wechat-body">
-      <img src="contact/wechat.jpg" alt="WeChat QR code" class="wechat-qr"/>
+      <picture>
+        <source srcset="contact/wechat.webp" type="image/webp" />
+        <img src="contact/wechat.jpg" alt="WeChat QR code" class="wechat-qr" width="888" height="1131" loading="lazy" decoding="async" />
+      </picture>
       <p class="wechat-hint" data-i18n="wechatHint">Open WeChat &rarr; Scan &rarr; Add me as a friend.</p>
     </div>
   </div>
@@ -945,12 +956,18 @@ const TRUST_LOGOS = [
         span.textContent = '&YOU';
         cell.appendChild(span);
       } else {
+        const picture = document.createElement('picture');
+        const source = document.createElement('source');
+        source.srcset = item.src.replace(/\.png$/i, '.webp');
+        source.type = 'image/webp';
         const img = document.createElement('img');
         img.src = item.src;
         img.alt = item.alt;
         img.loading = 'lazy';
         img.decoding = 'async';
-        cell.appendChild(img);
+        picture.appendChild(source);
+        picture.appendChild(img);
+        cell.appendChild(picture);
       }
       const tip = document.createElement('span');
       tip.className = 'logo-tip-data'; /* hidden data carrier; styled by JS into the floater */
@@ -1063,7 +1080,14 @@ function renderProjects(){
     const peekPhotos = (p.photos || []).slice(0, 4);
     const peekHTML = peekPhotos.length
       ? '<div class="photo-strip" aria-hidden="true">' +
-          peekPhotos.map(src => '<img class="thumb" src="'+escapeHTML(src)+'" alt="" loading="lazy">').join('') +
+          peekPhotos.map(src => {
+            const webp = escapeHTML(src.replace(/\.(jpe?g|png)$/i, '.webp'));
+            const safe = escapeHTML(src);
+            return '<picture>' +
+                     '<source srcset="'+webp+'" type="image/webp">' +
+                     '<img class="thumb" src="'+safe+'" alt="" loading="lazy" decoding="async">' +
+                   '</picture>';
+          }).join('') +
         '</div>'
       : '';
     card.innerHTML =
@@ -1165,7 +1189,14 @@ function openProjectModal(i){
           '</div>' +
         '</div>' +
         '<div class="photos-rail" tabindex="0" aria-label="' + (LANG === 'EN' ? 'Project photos, scroll horizontally' : '\u9879\u76ee\u7167\u7247\uff0c\u6a2a\u5411\u6eda\u52a8') + '">' +
-          photos.map(src => '<img src="'+escapeHTML(src)+'" alt="" loading="lazy" draggable="false">').join('') +
+          photos.map(src => {
+            const webp = escapeHTML(src.replace(/\.(jpe?g|png)$/i, '.webp'));
+            const safe = escapeHTML(src);
+            return '<picture>' +
+                     '<source srcset="'+webp+'" type="image/webp">' +
+                     '<img src="'+safe+'" alt="" loading="lazy" decoding="async" draggable="false">' +
+                   '</picture>';
+          }).join('') +
         '</div>' +
       '</div>'
     : '';
